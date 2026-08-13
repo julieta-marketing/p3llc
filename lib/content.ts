@@ -245,6 +245,10 @@ export type TeamMember = {
     label: string
   }>
   image: string
+  /** Decorative case-study photo that fills the inner half of the leadership panel. */
+  caseImage: string
+  /** Alt text / caption for the case-study photo. */
+  caseImageAlt: string
   linkedin: string
   email: string
   bio: string
@@ -263,8 +267,10 @@ export const team: TeamMember[] = [
       { value: '$6B+', label: 'Project experience' },
     ],
     image: '/leadership-jeff-fullerton-2026.jpg',
+    caseImage: '/case-studies/long-beach-civic-center-approved.webp',
+    caseImageAlt: 'Long Beach Civic Center',
     linkedin: 'https://www.linkedin.com/in/jeffreyfullerton/',
-    email: 'jeff@fullertonllc.com',
+    email: 'projects@P3LLC.net',
     bio:
       'Jeff Fullerton is a real estate development, infrastructure, finance, and public-private partnership professional with more than 20 years of experience delivering technically complex public and private projects. His work spans development, procurement, financing, project structuring, and multiple alternative-delivery models.',
   },
@@ -277,6 +283,8 @@ export const team: TeamMember[] = [
       { value: 'Public + Private', label: 'Partnership leadership' },
     ],
     image: '/leadership-john-keisler.jpg',
+    caseImage: '/case-studies/queen-mary-approved.png',
+    caseImageAlt: 'Queen Mary',
     linkedin: 'https://www.linkedin.com/in/jpkeisler/',
     email: 'john.keisler@sunstonecities.com',
     bio:
@@ -354,6 +362,9 @@ export const faqItems: FaqItem[] = [
 /* Contact                                                             */
 /* ------------------------------------------------------------------ */
 
+/** Single source of truth — used by the footer and the contact page. */
+export const contactEmail = 'projects@teamp3llc.com'
+
 export const contactInfo = {
-  emails: ['jeff@fullertonllc.com', 'john.keisler@sunstonecities.com'],
+  emails: [contactEmail],
 }

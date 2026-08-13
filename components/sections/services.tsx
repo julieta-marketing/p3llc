@@ -8,22 +8,18 @@ import { services } from '@/lib/content'
 const serviceVisuals = [
   {
     image: '/solutions/alternative-financing-building.png',
-    position: '50% 50%',
     backClass: 'bg-[color:var(--color-dark-azure)]',
   },
   {
     image: '/solutions/alternative-delivery-v2.png',
-    position: '50% 50%',
     backClass: 'bg-[color:var(--color-navy)]',
   },
   {
     image: '/solutions/expert-network-building.png',
-    position: '50% 50%',
     backClass: 'bg-[color:var(--color-blue)]',
   },
   {
     image: '/solutions/economic-development-v2.png',
-    position: '50% 50%',
     backClass: 'bg-[#155a72]',
   },
 ] as const
@@ -56,12 +52,12 @@ export function Services() {
             <Reveal
               key={item.title}
               delay={index * 90}
-              className="why-card-rail__item min-h-[23rem] lg:min-h-[27rem] xl:min-w-0 xl:flex-1"
+              className="why-card-rail__item min-h-[14rem] sm:min-h-[23rem] lg:min-h-[27rem] xl:min-w-0 xl:flex-1"
             >
               <article
                 tabIndex={0}
                 aria-label={`${item.title}. ${item.description}`}
-                className="why-flip-card group h-full min-h-[inherit] rounded-[1.5rem] outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-blue)] focus-visible:ring-offset-4"
+                className="why-flip-card group h-full min-h-[inherit] rounded-[1.15rem] outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-blue)] focus-visible:ring-offset-4 sm:rounded-[1.5rem]"
               >
                 <div className="why-flip-card__inner min-h-[inherit]">
                   <div
@@ -73,17 +69,16 @@ export function Services() {
                       alt=""
                       fill
                       sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                      style={{ objectPosition: visual.position }}
+                      className="services-suite__image object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#031015]/95 via-[#071a22]/35 to-[#071a22]/10" />
 
-                    <div className="relative flex min-h-[inherit] flex-col p-7 text-white lg:p-8">
-                      <div className="mt-auto pt-20">
-                        <h3 className="max-w-[16ch] font-sans text-[1.65rem] font-medium leading-[1.04] tracking-[-0.04em] !text-white lg:text-[1.8rem]">
+                    <div className="relative flex min-h-[inherit] flex-col p-5 text-white sm:p-7 lg:p-8">
+                      <div className="mt-auto pt-8 sm:pt-20">
+                        <h3 className="max-w-[22ch] font-sans text-[1.45rem] font-medium leading-[1.04] tracking-[-0.04em] !text-white sm:max-w-[16ch] sm:text-[1.65rem] lg:text-[1.8rem]">
                           {item.title}
                         </h3>
-                        <p className="mt-4 max-w-[38ch] text-sm leading-6 text-white/78 md:hidden">
+                        <p className="mt-2.5 max-w-[38ch] text-[0.82rem] leading-[1.45] text-white/78 sm:mt-4 sm:text-sm sm:leading-6 md:hidden">
                           {item.description}
                         </p>
                       </div>
@@ -91,10 +86,10 @@ export function Services() {
                   </div>
 
                   <div
-                    className={`why-flip-card__face why-flip-card__back ${visual.backClass} p-7 text-white shadow-[0_20px_70px_rgba(7,26,34,0.13)] lg:p-8`}
+                    className={`why-flip-card__face why-flip-card__back ${visual.backClass} p-5 text-white shadow-[0_20px_70px_rgba(7,26,34,0.13)] sm:p-7 lg:p-8`}
                     aria-hidden="true"
                   >
-                    <span className="absolute -right-7 -top-14 font-sans text-[11rem] font-semibold leading-none tracking-[-0.08em] text-white/[0.06]">
+                    <span className="absolute -right-5 -top-8 font-sans text-[7rem] font-semibold leading-none tracking-[-0.08em] text-white/[0.06] sm:-right-7 sm:-top-14 sm:text-[11rem]">
                       {index + 1}
                     </span>
 
@@ -108,12 +103,12 @@ export function Services() {
                         </span>
                       </div>
 
-                      <div className="mt-auto pt-16">
-                        <div className="mb-6 h-px w-12 bg-[color:var(--color-azure)]" />
-                        <h3 className="max-w-[15ch] font-sans text-[1.5rem] font-medium leading-[1.04] tracking-[-0.04em] !text-white lg:text-[1.65rem]">
+                      <div className="mt-auto pt-6 sm:pt-16">
+                        <div className="mb-3 h-px w-12 bg-[color:var(--color-azure)] sm:mb-6" />
+                        <h3 className="max-w-[20ch] font-sans text-[1.35rem] font-medium leading-[1.04] tracking-[-0.04em] !text-white sm:max-w-[15ch] sm:text-[1.5rem] lg:text-[1.65rem]">
                           {item.title}
                         </h3>
-                        <p className="mt-5 max-w-[40ch] text-sm leading-6 text-white/78">
+                        <p className="mt-3 max-w-[40ch] text-[0.82rem] leading-[1.45] text-white/78 sm:mt-5 sm:text-sm sm:leading-6">
                           {item.description}
                         </p>
                       </div>

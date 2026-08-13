@@ -8,6 +8,7 @@ import { CaseContactCta } from '@/components/sections/case-contact-cta'
 import { WhoWeServe } from '@/components/sections/who-we-serve'
 import { OurApproach } from '@/components/sections/our-approach'
 import { Team } from '@/components/sections/team'
+import { PartnershipValueBar, WhyP3Bar } from '@/components/partnership-value-bar'
 import { News } from '@/components/sections/news'
 import { FinalCta } from '@/components/sections/final-cta'
 import { caseStudies } from '@/lib/cases'
@@ -19,10 +20,12 @@ export default function HomePage() {
       <main id="main">
         <Hero />
         <About />
+        <PartnershipValueBar />
         <Team />
+        <WhyP3Bar />
         <CaseStudies projects={caseStudies.slice(0, 4)} />
-        <CaseContactCta />
         <Services />
+        <CaseContactCta />
         <div className="bg-[linear-gradient(180deg,#041820_0%,#063847_38%,#063847_64%,#041820_100%)]">
           <WhoWeServe />
           <OurApproach />

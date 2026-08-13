@@ -43,11 +43,11 @@ export function News() {
           <NewsletterForm id="news-email" variant="news" />
         </header>
 
-        <section className="news-minimal__card" aria-label="Newsroom">
+        <section className="news-minimal__card" aria-label="Articles and updates">
           {publishedCount === 0 ? (
-            <div className="news-minimal__empty" aria-label="P3 newsroom coming soon">
+            <div className="news-minimal__empty" aria-label="Articles and updates coming soon">
               <div className="news-minimal__empty-kicker">
-                <span>P3 Newsroom</span>
+                <span>Articles and Updates</span>
                 <span>Publishing soon</span>
               </div>
 
@@ -64,8 +64,8 @@ export function News() {
           ) : (
             <div className="news-minimal__empty">
               <div className="news-minimal__empty-kicker">
-                <span>Latest reporting</span>
-                <Link href="/news">View News Library</Link>
+                <span>Articles and Updates</span>
+                <Link href="/news">View all</Link>
               </div>
               <div className="news-minimal__list">
                 {newsPosts.map((post) => (

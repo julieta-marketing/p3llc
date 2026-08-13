@@ -10,7 +10,7 @@ import { SiteHeader } from '@/components/site-header'
 import { newsPosts } from '@/lib/news'
 
 export const metadata: Metadata = {
-  title: 'News Library — P3 LLC',
+  title: 'News — P3 LLC',
   description:
     'Read P3 LLC news, project features, public-private partnership insights, and company updates.',
 }
@@ -24,8 +24,8 @@ export default function NewsLibraryPage() {
           <Container>
             <Reveal className="grid gap-10 lg:grid-cols-12 lg:items-end">
               <div className="lg:col-span-9">
-                <Eyebrow onDark>Newsroom</Eyebrow>
-                <h1>News Library</h1>
+                <Eyebrow onDark>Articles and Updates</Eyebrow>
+                <h1>News</h1>
                 <Link
                   href="/#news"
                   className="group mt-8 inline-flex min-h-12 w-fit items-center gap-3 rounded-full border border-white/30 px-5 font-['Poppins'] text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-white outline-none transition-colors hover:border-[color:var(--color-azure)] hover:bg-[color:var(--color-azure)] hover:text-[color:var(--color-dark-azure)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-azure)]"
@@ -37,10 +37,6 @@ export default function NewsLibraryPage() {
                   Back to Featured News
                 </Link>
               </div>
-              <div className="case-library-hero__count lg:col-span-3 lg:justify-self-end">
-                <span>{String(newsPosts.length).padStart(2, '0')}</span>
-                <p>Features, insights, and P3 project updates</p>
-              </div>
             </Reveal>
           </Container>
         </section>
@@ -50,13 +46,12 @@ export default function NewsLibraryPage() {
             <Reveal className="case-library__toolbar">
               <div>
                 <p className="font-['Poppins'] text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-blue)]">
-                  Latest reporting
+                  Latest
                 </p>
                 <h2 className="mt-3 font-sans text-3xl font-medium tracking-[-0.04em] text-[color:var(--color-dark-azure)] md:text-4xl">
-                  News &amp; perspectives
+                  Articles and Updates
                 </h2>
               </div>
-              <p>{String(newsPosts.length).padStart(2, '0')} articles</p>
             </Reveal>
 
             <div className="case-library__grid">

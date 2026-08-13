@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
-import { navItems } from '@/lib/content'
+import { contactEmail, navItems } from '@/lib/content'
 import { Container } from '@/components/section'
 
-const footerContactEmail = 'projects@teamp3llc.com'
+const footerContactEmail = contactEmail
 
 export function SiteFooter() {
   const year = new Date().getFullYear()
@@ -17,14 +17,15 @@ export function SiteFooter() {
             <Link
               href="/"
               aria-label="P3 LLC home"
-              className="relative block h-[3.5rem] w-[11rem] outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-azure)]"
+              className="inline-block outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-azure)]"
             >
               <Image
                 src="/p3-logo-white.png"
                 alt=""
-                fill
-                sizes="176px"
-                className="object-contain object-left"
+                width={520}
+                height={162}
+                sizes="108px"
+                className="h-auto w-[5.75rem] sm:w-[6.75rem]"
               />
             </Link>
 
@@ -43,7 +44,7 @@ export function SiteFooter() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="inline-flex py-0.5 text-sm text-white/70 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:underline"
+                      className="inline-flex min-h-11 items-center py-2 text-sm text-white/70 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:underline sm:min-h-0 sm:py-0.5"
                     >
                       {item.label}
                     </Link>
@@ -52,7 +53,7 @@ export function SiteFooter() {
                 <li>
                   <Link
                     href="/contact#faq"
-                    className="inline-flex py-0.5 text-sm text-white/70 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:underline"
+                    className="inline-flex min-h-11 items-center py-2 text-sm text-white/70 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:underline sm:min-h-0 sm:py-0.5"
                   >
                     FAQ
                   </Link>
@@ -60,7 +61,7 @@ export function SiteFooter() {
                 <li>
                   <Link
                     href="/contact"
-                    className="inline-flex py-0.5 text-sm text-white/70 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:underline"
+                    className="inline-flex min-h-11 items-center py-2 text-sm text-white/70 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:underline sm:min-h-0 sm:py-0.5"
                   >
                     Contact
                   </Link>
@@ -90,7 +91,7 @@ export function SiteFooter() {
           <p>Copyright &copy; {year} P3 LLC - All Rights Reserved.</p>
           <Link
             href="/privacy"
-            className="transition-colors hover:text-white focus-visible:text-white focus-visible:underline"
+            className="inline-flex min-h-11 items-center transition-colors hover:text-white focus-visible:text-white focus-visible:underline sm:min-h-0"
           >
             Privacy Policy
           </Link>

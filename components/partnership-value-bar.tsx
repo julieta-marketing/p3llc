@@ -1,53 +1,146 @@
-import Image from 'next/image'
+'use client'
+
+import { useEffect, useRef, type RefObject } from 'react'
 
 import { Reveal } from '@/components/reveal'
 import { containerClass } from '@/components/section'
+import { cn } from '@/lib/utils'
 
-export function PartnershipValueBar() {
+type InsightBandProps = {
+  id: string
+  title: string
+  body: string
+  tone?: 'navy' | 'mist'
+}
+
+/**
+ * Writes a 0→1 progress value to `--band-p` as the element travels through the
+ * viewport. rAF-throttled and only active while the band is on screen.
+ */
+function useBandProgress(ref: RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let frame = 0
+    let visible = false
+
+    const update = () => {
+      frame = 0
+      const rect = el.getBoundingClientRect()
+      const viewport = window.innerHeight || 1
+      const progress = (viewport - rect.top) / (viewport + rect.height)
+      el.style.setProperty(
+        '--band-p',
+        Math.min(1, Math.max(0, progress)).toFixed(3),
+      )
+    }
+
+    const schedule = () => {
+      if (frame || !visible) return
+      frame = requestAnimationFrame(update)
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting
+        if (visible) schedule()
+      },
+      { threshold: 0 },
+    )
+    observer.observe(el)
+
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    update()
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [ref])
+}
+
+/**
+ * Compact full-bleed banner used to bracket the leadership section.
+ * Typography-led: no photography, no pattern fills — a left accent stripe,
+ * a display heading, and a lede beneath it. Ambient layers drift with scroll.
+ */
+function InsightBand({
+  id,
+  title,
+  body,
+  tone = 'navy',
+}: InsightBandProps) {
+  const isNavy = tone === 'navy'
+  const bandRef = useRef<HTMLElement>(null)
+
+  useBandProgress(bandRef)
+
   return (
     <aside
-      className="relative isolate overflow-hidden border-y border-white/10 bg-[color:var(--color-navy)] py-12 text-white sm:py-14"
-      aria-labelledby="partnership-value-title"
+      ref={bandRef}
+      className={cn(
+        'insight-band relative isolate overflow-hidden',
+        isNavy ? 'insight-band--navy text-white' : 'insight-band--mist',
+      )}
+      aria-labelledby={id}
     >
-      <Image
-        src="/approved-long-beach-downtown.jpg"
-        alt=""
-        fill
-        sizes="100vw"
-        className="-z-20 object-cover object-center opacity-25"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(10,52,72,0.95)_0%,rgba(8,126,164,0.86)_100%)]"
-        aria-hidden="true"
-      />
+      <span className="insight-band__stripe" aria-hidden="true" />
+      <span className="insight-band__sheen" aria-hidden="true" />
+      <span className="insight-band__aura" aria-hidden="true" />
+      {/* Dot grain only reads on the navy surface. */}
+      {isNavy ? <span className="insight-band__grain" aria-hidden="true" /> : null}
 
-      <div className={`${containerClass} grid gap-7 lg:grid-cols-12 lg:items-center lg:gap-12`}>
-        <h2
-          id="partnership-value-title"
-          className="font-sans text-[2.8rem] font-medium leading-[1.02] tracking-[-0.05em] text-white sm:text-[3.5rem] lg:col-span-5 lg:text-[4rem]"
-        >
-          <Reveal as="span" className="block will-change-transform">
-            Why
-          </Reveal>
-          <Reveal as="span" delay={90} className="block will-change-transform">
-            public&#8209;private
-          </Reveal>
-          <Reveal as="span" delay={180} className="block will-change-transform">
-            partnerships?
-          </Reveal>
-        </h2>
+      <div className={cn(containerClass, 'py-6 md:py-7 lg:py-8')}>
+        <Reveal>
+          <h2
+            id={id}
+            className={cn(
+              'font-sans text-[1.9rem] font-medium leading-[1.05] tracking-[-0.05em] sm:text-[2.35rem] lg:whitespace-nowrap lg:text-[2.8rem]',
+              isNavy ? 'text-white' : 'text-[color:var(--color-dark-azure)]',
+            )}
+          >
+            {title}
+          </h2>
+        </Reveal>
 
-        <Reveal
-          as="p"
-          delay={320}
-          className="max-w-[52ch] text-[1.08rem] font-medium leading-7 text-white/95 sm:text-[1.2rem] sm:leading-8 lg:col-span-7 lg:text-[1.3rem] lg:leading-9"
-        >
-          Public-private partnerships help agencies deliver projects faster,
-          expand funding opportunities, and leverage private-sector expertise to
-          achieve better outcomes.
+        <Reveal delay={140} className="insight-band__lede mt-3 lg:mt-4">
+          <p
+            className={cn(
+              'text-[1.35rem] leading-9 sm:text-[1.5rem] sm:leading-10 lg:text-[1.62rem] lg:leading-[2.5rem]',
+              isNavy ? 'text-white/78' : 'text-[color:var(--color-dark-azure)]/72',
+            )}
+          >
+            {body}
+          </p>
         </Reveal>
       </div>
     </aside>
+  )
+}
+
+export function PartnershipValueBar() {
+  return (
+    <InsightBand
+      id="partnership-value-title"
+      title="Why public-private partnerships?"
+      body="Public-private partnerships help agencies deliver projects faster, expand funding opportunities, and leverage private-sector expertise to achieve better outcomes."
+      tone="navy"
+    />
+  )
+}
+
+export function WhyP3Bar() {
+  return (
+    <InsightBand
+      id="why-p3-band-title"
+      title="Why P3 LLC?"
+      body="We bring together public-sector leadership, private-sector expertise, and a trusted network of partners to help deliver complex projects."
+      tone="mist"
+    />
   )
 }

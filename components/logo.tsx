@@ -5,27 +5,19 @@ import { cn } from '@/lib/utils'
 
 type LogoProps = {
   className?: string
-  size?: 'header' | 'footer'
   priority?: boolean
 }
 
+/* The footer renders its own white wordmark, so only the header preset lives here. */
 const logoSizes = {
   header: {
     frame: 'h-[38px] w-[119px] lg:h-[41px] lg:w-[129px] 2xl:h-[46px] 2xl:w-[144px]',
     sizes: '(min-width: 1536px) 144px, (min-width: 1024px) 129px, 119px',
   },
-  footer: {
-    frame: 'h-[56px] w-[176px]',
-    sizes: '176px',
-  },
 } as const
 
-export function Logo({
-  className,
-  size = 'header',
-  priority = false,
-}: LogoProps) {
-  const dimensions = logoSizes[size]
+export function Logo({ className, priority = false }: LogoProps) {
+  const dimensions = logoSizes.header
 
   return (
     <Link

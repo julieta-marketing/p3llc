@@ -13,9 +13,14 @@ type TeamMember = (typeof team)[number]
 export function Team() {
   return (
     <Section id="leadership" className="leadership-section bg-white">
-      <h2 className="sr-only">Leadership</h2>
+      <Reveal>
+        <h2 className="font-sans text-[2.45rem] font-medium leading-[1.01] tracking-[-0.05em] text-[color:var(--color-dark-azure)] sm:text-[3.3rem] lg:text-[4.3rem]">
+          Leadership
+        </h2>
+      </Reveal>
+
       <div
-        className="leadership-pair"
+        className="leadership-pair mt-14 lg:mt-20"
         aria-label="Executive leadership profiles"
       >
         {team.map((person, index) => (
@@ -28,7 +33,7 @@ export function Team() {
 
 function LeaderCard({ member, index }: { member: TeamMember; index: number }) {
   const headingId = `leadership-member-${index + 1}`
-  const achievements = index === 1 ? member.achievements.slice(0, 1) : member.achievements
+  const achievements = member.achievements
 
   return (
     <Reveal delay={index * 140} className="leadership-profile__reveal">
@@ -40,43 +45,55 @@ function LeaderCard({ member, index }: { member: TeamMember; index: number }) {
         aria-labelledby={headingId}
       >
         <div className="leadership-profile__body">
-          <div className="leadership-profile__portrait">
-            <Image
-              src={member.image}
-              alt={`Portrait of ${member.name}`}
-              fill
-              sizes="(min-width: 1024px) 46vw, (min-width: 641px) 42rem, calc(100vw - 3.5rem)"
-              className="object-cover object-top"
-            />
-          </div>
+          <div className="leadership-profile__column">
+            <div className="leadership-profile__portrait">
+              <Image
+                src={member.image}
+                alt={`Portrait of ${member.name}`}
+                fill
+                sizes="(min-width: 1024px) 34rem, calc(100vw - 3.5rem)"
+                className="object-cover object-top"
+              />
+            </div>
 
-          <div className="leadership-profile__heading">
-            <h3 id={headingId}>{member.name}</h3>
-            <p>{member.role}</p>
-          </div>
+            <div className="leadership-profile__heading">
+              <h3 id={headingId}>{member.name}</h3>
+              <p>{member.role}</p>
+            </div>
 
-          <div className="leadership-profile__metrics" aria-label={`${member.name} achievements`}>
-            {achievements.map((achievement) => (
-              <div key={achievement.label} className="leadership-profile__metric">
-                <p><AnimatedMetric value={achievement.value} /></p>
-                <span>{achievement.label}</span>
-              </div>
-            ))}
-          </div>
+            <div className="leadership-profile__metrics" aria-label={`${member.name} achievements`}>
+              {achievements.map((achievement) => (
+                <div key={achievement.label} className="leadership-profile__metric">
+                  <p><AnimatedMetric value={achievement.value} /></p>
+                  <span>{achievement.label}</span>
+                </div>
+              ))}
+            </div>
 
-          <p className="leadership-profile__bio">{member.bio}</p>
+            <p className="leadership-profile__bio">{member.bio}</p>
 
-          <div className="leadership-profile__links">
-            <a href={`mailto:${member.email}`}>
-              Email
-              <ArrowRight aria-hidden="true" />
-            </a>
-            <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
-              LinkedIn
-              <ArrowRight aria-hidden="true" />
-            </a>
+            <div className="leadership-profile__links">
+              <a href={`mailto:${member.email}`}>
+                Email
+                <ArrowRight aria-hidden="true" />
+              </a>
+              <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
+                LinkedIn
+                <ArrowRight aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </div>
+
+        <figure className="leadership-profile__media">
+          <Image
+            src={member.caseImage}
+            alt={member.caseImageAlt}
+            fill
+            sizes="(min-width: 1024px) 75vw, 100vw"
+            className="object-cover"
+          />
+        </figure>
       </article>
     </Reveal>
   )

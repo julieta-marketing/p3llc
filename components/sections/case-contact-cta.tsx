@@ -6,10 +6,9 @@ import { useEffect, useRef, useState } from 'react'
 
 const contactVisuals = [
   { className: 'case-contact-visual__tile--one', position: '0% 0%' },
-  { className: 'case-contact-visual__tile--two', position: '50% 0%' },
+  { className: 'case-contact-visual__tile--two', position: '100% 30%' },
   { className: 'case-contact-visual__tile--three', position: '50% 50%' },
   { className: 'case-contact-visual__tile--four', position: '0% 85%' },
-  { className: 'case-contact-visual__tile--five', position: '50% 100%' },
   { className: 'case-contact-visual__tile--six', position: '100% 100%' },
 ]
 

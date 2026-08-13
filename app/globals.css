@@ -105,11 +105,38 @@
     background: var(--background);
   }
 
+  /* The mobile header is 3.75rem, not the 6.5rem desktop bar, so anchor jumps
+     were landing well below their target. */
+  @media (max-width: 73.6875rem) {
+    html {
+      scroll-padding-top: 4.75rem;
+    }
+  }
+
   body {
     @apply bg-background font-sans text-foreground antialiased;
     min-width: 0;
     font-feature-settings: "kern" 1, "liga" 1;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Several sections break out to `width: 100vw`; without this a single
+     overflowing child turns into a page-wide horizontal scroll on phones.
+     `clip` rather than `hidden` so it does not create a scroll container
+     (which would break `position: sticky` and smooth scrolling). */
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  /* iOS Safari zooms the page whenever a focused field is under 16px and never
+     zooms back out. */
+  @media (max-width: 767px) {
+    input,
+    select,
+    textarea {
+      font-size: max(16px, 1em);
+    }
   }
 
   h1,
@@ -149,17 +176,25 @@
 }
 
 .site-header {
-  border-bottom: 1px solid rgb(7 42 55 / 7%);
-  background:
-    linear-gradient(90deg, rgb(255 255 255 / 97%), rgb(246 251 252 / 94%) 50%, rgb(255 255 255 / 97%));
+  border-bottom: 1px solid rgb(7 42 55 / 8%);
+  background: transparent;
   box-shadow: 0 0.15rem 0.8rem rgb(7 42 55 / 0%);
-  backdrop-filter: blur(1.5rem) saturate(130%);
-  -webkit-backdrop-filter: blur(1.5rem) saturate(130%);
   transition:
     top 420ms cubic-bezier(.22, 1, .36, 1),
     background 320ms ease,
     border-color 320ms ease,
     box-shadow 420ms ease;
+}
+
+/* Flat surface behind the nav — one colour, no gradient, no fade. */
+.site-header::before {
+  position: absolute;
+  inset: 0;
+  background: #fbfcfc;
+  content: "";
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 420ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .site-header::after {
@@ -170,7 +205,7 @@
   height: 1px;
   background: linear-gradient(90deg, transparent 5%, rgb(8 126 164 / 16%) 28%, rgb(101 200 229 / 38%) 50%, rgb(8 126 164 / 16%) 72%, transparent 95%);
   content: "";
-  opacity: 1;
+  opacity: 0;
   pointer-events: none;
   transition: opacity 260ms ease;
 }
@@ -178,9 +213,20 @@
 .site-header.is-scrolled,
 .site-header.is-open {
   border-color: rgb(7 42 55 / 9%);
-  background:
-    linear-gradient(90deg, rgb(255 255 255 / 94%), rgb(246 251 252 / 90%) 50%, rgb(255 255 255 / 94%));
+  background: rgb(251 252 252 / 92%);
   box-shadow: 0 1rem 3rem rgb(7 42 55 / 10%);
+  backdrop-filter: blur(1.5rem) saturate(130%);
+  -webkit-backdrop-filter: blur(1.5rem) saturate(130%);
+}
+
+.site-header.is-scrolled::before,
+.site-header.is-open::before {
+  opacity: 0;
+}
+
+.site-header.is-scrolled::after,
+.site-header.is-open::after {
+  opacity: 1;
 }
 
 .site-header__inner {
@@ -213,62 +259,44 @@
 }
 
 @media (min-width: 73.75rem) {
-  .site-header {
+  .site-header,
+  .site-header.is-scrolled {
     border-color: transparent;
     background: transparent;
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-  }
-
-  .site-header::before {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(90deg, rgb(255 255 255 / 97%), rgb(246 251 252 / 94%) 50%, rgb(255 255 255 / 97%));
-    content: "";
-    opacity: 1;
-    pointer-events: none;
-    transition: opacity 420ms cubic-bezier(.22, 1, .36, 1);
   }
 
   .site-header.is-scrolled {
     top: 0;
-    border-color: transparent;
-    background: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
     pointer-events: none;
   }
 
-  .site-header.is-scrolled::before {
-    opacity: 0;
-  }
-
+  .site-header.is-scrolled::before,
   .site-header.is-scrolled::after {
     opacity: 0;
   }
 
+  /* No pill at rest — the scrim alone carries the nav, so there is only one
+     surface over the hero. The pill materialises once the page scrolls. */
   .site-header__inner {
     width: min(calc(100% - 1rem), 94rem);
-    border-color: rgb(7 42 55 / 5%);
+    border-color: transparent;
     border-radius: 0.9rem;
-    background:
-      linear-gradient(112deg, rgb(255 255 255 / 96%), rgb(241 248 249 / 92%));
-    box-shadow:
-      0 0.25rem 1.2rem rgb(7 42 55 / 0%),
-      inset 0 1px 0 rgb(255 255 255 / 88%);
-    backdrop-filter: blur(1.35rem) saturate(125%);
-    -webkit-backdrop-filter: blur(1.35rem) saturate(125%);
+    background: transparent;
+    box-shadow: none;
   }
 
   .site-header.is-scrolled .site-header__inner {
     transform: translateY(0.35rem);
     border-color: rgb(7 42 55 / 10%);
+    background: rgb(252 253 253 / 94%);
     box-shadow:
       0 1rem 3rem rgb(7 42 55 / 12%),
       inset 0 1px 0 rgb(255 255 255 / 88%);
+    backdrop-filter: blur(1.35rem) saturate(125%);
+    -webkit-backdrop-filter: blur(1.35rem) saturate(125%);
     pointer-events: auto;
   }
 
@@ -1930,9 +1958,9 @@
   overflow: hidden;
   margin-left: calc(50% - 50vw);
   padding:
-    clamp(2.75rem, 4vw, 4rem)
+    clamp(1.5rem, 2.4vw, 2.4rem)
     max(1.25rem, calc((100vw - 88rem) / 2 + 3rem))
-    clamp(2.75rem, 4vw, 4rem);
+    clamp(1.5rem, 2.4vw, 2.4rem);
   background: transparent;
   isolation: isolate;
 }
@@ -1940,8 +1968,8 @@
 .network-workspace__field {
   position: absolute;
   z-index: 0;
-  top: 1rem;
-  bottom: 1rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
   left: 50%;
   width: min(96rem, calc(100vw - 1rem));
   overflow: hidden;
@@ -1957,6 +1985,108 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
+
+/* Network glow: faint ambient corners + a slowly drifting line grid, brightened around the cursor */
+.network-glow {
+  --mx: 50%;
+  --my: 50%;
+  background: linear-gradient(160deg, rgb(6 21 28 / 65%), rgb(6 30 38 / 40%) 55%, rgb(6 21 28 / 65%));
+}
+
+.network-glow__ambient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 14% 18%, rgb(8 126 164 / 20%), transparent 32%),
+    radial-gradient(circle at 86% 82%, rgb(101 200 229 / 16%), transparent 34%);
+}
+
+.network-glow__grid {
+  position: absolute;
+  inset: -3rem;
+  background-image: radial-gradient(circle, rgb(200 235 245 / 10%) 0.8px, transparent 1.1px);
+  background-size: 2rem 2rem;
+  animation: network-grid-float 30s ease-in-out infinite;
+  will-change: transform;
+}
+
+.network-glow__grid-wave {
+  position: absolute;
+  inset: -3rem;
+  background-image: radial-gradient(circle, rgb(160 232 248 / 34%) 0.9px, transparent 1.2px);
+  background-size: 2rem 2rem;
+  -webkit-mask-image: linear-gradient(115deg, transparent 30%, rgb(0 0 0 / 40%) 41%, black 47%, rgb(0 0 0 / 40%) 53%, transparent 64%);
+  mask-image: linear-gradient(115deg, transparent 30%, rgb(0 0 0 / 40%) 41%, black 47%, rgb(0 0 0 / 40%) 53%, transparent 64%);
+  -webkit-mask-size: 280% 100%;
+  mask-size: 280% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: network-grid-sweep 13s linear infinite;
+  will-change: mask-position;
+}
+
+.network-glow__grid-lit {
+  position: absolute;
+  inset: -3rem;
+  background-image: radial-gradient(circle, rgb(160 232 248 / 32%) 0.9px, transparent 1.2px);
+  background-size: 2rem 2rem;
+  opacity: 0;
+  transition: opacity 380ms ease;
+  animation: network-grid-float 30s ease-in-out infinite;
+  -webkit-mask-image: radial-gradient(10rem circle at var(--mx) var(--my), black 0 22%, transparent 76%);
+  mask-image: radial-gradient(10rem circle at var(--mx) var(--my), black 0 22%, transparent 76%);
+  will-change: transform;
+}
+
+.network-glow.is-active .network-glow__grid-lit {
+  opacity: 1;
+}
+
+@keyframes network-grid-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(1.5rem, 1.1rem, 0); }
+}
+
+@keyframes network-grid-sweep {
+  0% {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  100% {
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .network-glow__grid,
+  .network-glow__grid-wave,
+  .network-glow__grid-lit {
+    background-size: 1.5rem 1.5rem;
+  }
+}
+
+@media (hover: none) {
+  .network-glow__grid-lit {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .network-glow__grid,
+  .network-glow__grid-wave,
+  .network-glow__grid-lit {
+    animation: none;
+  }
+
+  .network-glow__grid-wave {
+    opacity: 0.25;
+  }
+
+  .network-glow__grid-lit {
+    transition: none;
+  }
 }
 
 .network-graph {
@@ -2351,54 +2481,62 @@
 .network-lists {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(4rem, 8vw, 8rem);
+  grid-template-rows: auto auto;
+  gap: 0 clamp(2.5rem, 5vw, 5rem);
 }
 
+/* Each column spans both parent rows via subgrid, so the two headings share a
+   track and the two lists start on the same baseline even if a heading wraps. */
 .network-list {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  align-content: start;
   min-width: 0;
-  padding: clamp(1rem, 2vw, 1.75rem) 0;
-}
-
-.network-list:first-child {
-  padding-left: 0;
+  padding: clamp(0.25rem, 0.8vw, 0.75rem) 0;
 }
 
 .network-list__heading > span {
   display: block;
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.7rem;
   color: #76d3e8;
-  font-size: 0.74rem;
+  font-size: 0.86rem;
   font-weight: 680;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .network-list__heading h3 {
-  max-width: 21ch;
   color: rgb(255 255 255 / 96%);
   font-family: var(--font-sans);
-  font-size: clamp(1.75rem, 2.5vw, 2.35rem);
+  font-size: clamp(1.35rem, 1.85vw, 1.75rem);
   font-weight: 460;
-  line-height: 1.1;
-  letter-spacing: -0.035em;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  text-wrap: nowrap;
 }
 
+/* Content-sized columns so no entry ever wraps to a second line. */
 .network-list ul {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.15rem clamp(1.5rem, 3vw, 3.25rem);
-  margin-top: clamp(2.25rem, 3.4vw, 3.25rem);
-  padding-left: 1.3rem;
+  grid-template-columns: max-content max-content;
+  grid-template-rows: repeat(var(--list-rows, 3), auto);
+  grid-auto-flow: column;
+  align-items: start;
+  justify-content: start;
+  gap: 0.95rem clamp(1.5rem, 3vw, 3.25rem);
+  margin-top: clamp(1.35rem, 2.2vw, 2rem);
+  padding-left: 1.4rem;
   list-style: disc;
 }
 
 .network-list li {
-  padding-left: 0.2rem;
-  color: rgb(255 255 255 / 75%);
-  font-size: clamp(1.08rem, 1.35vw, 1.22rem);
+  padding-left: 0.25rem;
+  color: rgb(255 255 255 / 80%);
+  font-size: clamp(0.98rem, 1.25vw, 1.2rem);
   font-weight: 430;
-  line-height: 1.52;
-  text-wrap: balance;
+  line-height: 1.5;
+  white-space: nowrap;
 }
 
 .network-list li::marker {
@@ -2406,22 +2544,38 @@
   font-size: 0.88em;
 }
 
-@media (max-width: 767px) {
+/* Below this width the two content-sized columns stop fitting side by side,
+   so each list stacks and runs as a single column instead. */
+@media (max-width: 1023px) {
   .network-lists {
     grid-template-columns: 1fr;
-    gap: 3.5rem;
+    grid-template-rows: none;
+    gap: 3rem;
   }
 
-  .network-list,
-  .network-list:first-child,
-  .network-list:last-child {
+  .network-list {
+    display: block;
+    grid-row: auto;
+    grid-template-rows: none;
     padding: 0;
   }
 
   .network-list ul {
     grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-flow: row;
     gap: 0.85rem;
-    margin-top: 1.75rem;
+    margin-top: 1.5rem;
+  }
+}
+
+/* The lists are already single-column here, so there is nothing to gain from
+   forcing one line — and a longer entry would silently overflow. */
+@media (max-width: 1023px) {
+  .network-list__heading h3,
+  .network-list li {
+    text-wrap: balance;
+    white-space: normal;
   }
 }
 
@@ -2678,6 +2832,18 @@
   }
 }
 
+/* Source photos are portrait (0.8). A centred crop in the short mobile card
+   lands on pavement, so bias the frame upward toward the buildings. */
+.services-suite__image {
+  object-position: 50% 50%;
+}
+
+@media (max-width: 639px) {
+  .services-suite__image {
+    object-position: 50% 40%;
+  }
+}
+
 .service-switch-icon {
   display: grid;
   width: 3.25rem;
@@ -2850,17 +3016,17 @@
 /* Case-study contact invitation */
 .case-contact-visual {
   position: relative;
-  min-height: 100svh;
+  min-height: max(45rem, 87svh);
   overflow: hidden;
   border-top: 1px solid color-mix(in srgb, var(--color-navy) 12%, transparent);
   background:
-    radial-gradient(circle at 50% 52%, rgba(100, 199, 233, 0.17), transparent 28rem),
+    radial-gradient(circle at 50% 52%, rgba(100, 199, 233, 0.17), transparent 22rem),
     #f8fafb;
 }
 
 .case-contact-visual__stage {
   position: relative;
-  min-height: 100svh;
+  min-height: max(45rem, 87svh);
   overflow: hidden;
   isolation: isolate;
 }
@@ -2906,50 +3072,45 @@
 }
 
 .case-contact-visual__tile--one {
-  width: clamp(12rem, 18vw, 18rem);
-  --contact-out-x: -34vw;
-  --contact-out-y: -24svh;
+  width: clamp(9rem, 14vw, 14rem);
+  aspect-ratio: 2 / 3;
+  background-size: 304% 304%;
+  --contact-out-x: -33vw;
+  --contact-out-y: -21svh;
   --contact-delay: 0ms;
 }
 
 .case-contact-visual__tile--two {
-  width: clamp(9rem, 12vw, 12rem);
-  --contact-out-x: -18vw;
-  --contact-out-y: -31svh;
-  --contact-delay: 40ms;
+  width: clamp(6rem, 8vw, 8rem);
+  --contact-out-x: 38vw;
+  --contact-out-y: 4svh;
+  --contact-delay: 130ms;
 }
 
 .case-contact-visual__tile--three {
-  width: clamp(14rem, 22vw, 22rem);
+  width: clamp(12.5rem, 19vw, 19rem);
   aspect-ratio: 3 / 2;
   background-image: url('/case-studies/long-beach-civic-center-approved.webp');
   background-size: cover;
-  --contact-out-x: 32vw;
-  --contact-out-y: -24svh;
-  --contact-delay: 80ms;
+  --contact-out-x: 31vw;
+  --contact-out-y: -19svh;
+  --contact-delay: 70ms;
 }
 
 .case-contact-visual__tile--four {
-  width: clamp(14rem, 22vw, 22rem);
+  width: clamp(13.5rem, 20vw, 20rem);
   aspect-ratio: 3 / 2;
   background-size: 304% 304%;
-  --contact-out-x: -32vw;
-  --contact-out-y: 25svh;
-  --contact-delay: 60ms;
-}
-
-.case-contact-visual__tile--five {
-  width: clamp(9rem, 12vw, 12rem);
-  --contact-out-x: 18vw;
-  --contact-out-y: 31svh;
-  --contact-delay: 100ms;
+  --contact-out-x: -28vw;
+  --contact-out-y: 22svh;
+  --contact-delay: 45ms;
 }
 
 .case-contact-visual__tile--six {
-  width: clamp(12rem, 18vw, 18rem);
-  --contact-out-x: 34vw;
+  width: clamp(8rem, 11vw, 11rem);
+  --contact-out-x: 35vw;
   --contact-out-y: 25svh;
-  --contact-delay: 120ms;
+  --contact-delay: 105ms;
 }
 
 .case-contact-visual__content {
@@ -2959,7 +3120,7 @@
   display: flex;
   width: min(92%, 52rem);
   margin: 0 auto;
-  padding: 8rem 1.5rem;
+  padding: 5.25rem 1.5rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -2971,7 +3132,7 @@
 .case-contact-visual__heading {
   max-width: 14ch;
   font-family: var(--font-sans);
-  font-size: clamp(2.65rem, 6vw, 5.5rem);
+  font-size: clamp(2.35rem, 5vw, 4.4rem);
   font-weight: 500;
   line-height: 0.98;
   letter-spacing: -0.055em;
@@ -2989,17 +3150,17 @@
 }
 
 .case-contact-visual__copy {
-  max-width: 39ch;
-  margin-top: 1.7rem;
+  max-width: 42ch;
+  margin-top: 1.05rem;
   font-size: 1rem;
-  line-height: 1.75;
+  line-height: 1.65;
   color: color-mix(in srgb, var(--color-dark-azure) 66%, transparent);
 }
 
 .case-contact-visual__link {
   display: inline-flex;
-  min-height: 3.75rem;
-  margin-top: 2rem;
+  min-height: 3.4rem;
+  margin-top: 1.4rem;
   padding: 0.45rem 0.5rem 0.45rem 1.55rem;
   align-items: center;
   gap: 1.25rem;
@@ -3133,37 +3294,51 @@
     border-radius: 1.1rem;
   }
 
-  .case-contact-visual__tile--two,
-  .case-contact-visual__tile--five {
+  /* Too little room for the mid-right filler on phones. */
+  .case-contact-visual__tile--two {
     display: none;
   }
 
+  /* Vertical offsets are in rem, not svh. Tied to the viewport they drifted
+     over the copy on short screens; the text block is a fixed rem height, so
+     the clearance has to be measured in the same unit. */
+  .case-contact-visual,
+  .case-contact-visual__stage {
+    min-height: 48rem;
+  }
+
   .case-contact-visual__tile--one {
-    width: 9.5rem;
-    --contact-out-x: -25vw;
-    --contact-out-y: -26svh;
+    width: 6rem;
+    --contact-out-x: -28vw;
+    --contact-out-y: -15rem;
   }
 
   .case-contact-visual__tile--three {
-    width: clamp(8.5rem, 42vw, 10.2rem);
-    --contact-out-x: 24vw;
-    --contact-out-y: -25svh;
+    width: clamp(7.5rem, 30vw, 8.5rem);
+    --contact-out-x: 27vw;
+    --contact-out-y: -13rem;
   }
 
   .case-contact-visual__tile--four {
-    width: clamp(8.5rem, 42vw, 10.2rem);
-    --contact-out-x: -24vw;
-    --contact-out-y: 25svh;
+    width: clamp(8rem, 32vw, 9rem);
+    --contact-out-x: -25vw;
+    --contact-out-y: 13.5rem;
   }
 
   .case-contact-visual__tile--six {
-    width: 9.5rem;
-    --contact-out-x: 25vw;
-    --contact-out-y: 26svh;
+    width: 5.5rem;
+    --contact-out-x: 30vw;
+    --contact-out-y: 15.5rem;
   }
 
   .case-contact-visual__content {
-    padding: 7rem 1.25rem;
+    padding: 3.75rem 1.25rem;
+  }
+
+  /* Keeps the text block short enough to stay inside the tile-free band.
+     Scoped so the final CTA, which reuses this class, is unaffected. */
+  .case-contact-visual .case-contact-visual__heading {
+    font-size: clamp(2.05rem, 8.6vw, 2.5rem);
   }
 
   .case-contact-visual__copy {
@@ -4863,67 +5038,38 @@
 }
 
 .leadership-profile__reveal + .leadership-profile__reveal {
-  margin-top: clamp(-10rem, -12vw, -7rem);
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
 }
 
 .leadership-profile {
   position: relative;
   display: grid;
-  min-height: clamp(28rem, 42vw, 34rem);
   grid-template-columns: repeat(12, minmax(0, 1fr));
   align-items: center;
   isolation: isolate;
 }
 
-.leadership-profile__architecture {
-  position: absolute;
-  z-index: -1;
-  width: min(50vw, 46rem);
-  height: 82%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  opacity: 0;
-  pointer-events: none;
-  mix-blend-mode: multiply;
-  filter: grayscale(1) contrast(1.24);
-  transform: translateX(2.5rem);
-  transition:
-    opacity 1200ms ease,
-    transform 1500ms cubic-bezier(.22, 1, .36, 1);
-}
-
-.leadership-profile:not(.leadership-profile--reverse) .leadership-profile__architecture {
-  top: -3%;
-  right: calc(((100vw - 100%) / -2) - 5rem);
-  background-image: url('/leadership-architecture-jeff.png');
-  background-position: right center;
-  background-size: 110% auto;
-}
-
-.leadership-profile--reverse .leadership-profile__architecture {
-  bottom: -4%;
-  left: calc(((100vw - 100%) / -2) - 5rem);
-  background-image: url('/leadership-architecture-john.png');
-  background-position: left center;
-  background-size: 104% auto;
-  transform: translateX(-2.5rem);
-}
-
-.leadership-profile__reveal.is-visible .leadership-profile__architecture {
-  opacity: 0.44;
-  transform: translateX(0);
-}
-
 .leadership-profile__body {
+  --panel-pad: clamp(2.25rem, 3.6vw, 3.25rem);
+  --panel-bleed: calc(((100vw - 100%) / 2) + 1rem);
   position: relative;
   z-index: 1;
-  grid-column: 1 / span 6;
-  max-width: 31rem;
+  grid-column: 1 / span 8;
+  max-width: none;
+  padding: var(--panel-pad);
+  padding-left: calc(var(--panel-bleed) + var(--panel-pad));
+  margin-left: calc(var(--panel-bleed) * -1);
+  border-radius: 0 2.25rem 2.25rem 0;
+  background: linear-gradient(150deg, #f4f7f7 0%, #eef4f5 52%, #e9f1f3 100%);
 }
 
 .leadership-profile--reverse .leadership-profile__body {
-  grid-column: 7 / -1;
+  grid-column: 5 / -1;
+  padding-left: var(--panel-pad);
+  padding-right: calc(var(--panel-bleed) + var(--panel-pad));
+  margin-left: 0;
+  margin-right: calc(var(--panel-bleed) * -1);
+  border-radius: 2.25rem 0 0 2.25rem;
 }
 
 .leadership-profile__portrait {
@@ -5015,11 +5161,6 @@
 }
 
 @media (min-width: 1024px) {
-  .leadership-profile__body,
-  .leadership-profile--reverse .leadership-profile__body {
-    transform: translateX(clamp(3rem, 5vw, 4.5rem));
-  }
-
   .leadership-profile--reverse .leadership-profile__metrics {
     width: max-content;
     max-width: none;
@@ -5142,39 +5283,17 @@
   .leadership-profile {
     min-height: auto;
     grid-template-columns: 1fr;
-    padding: clamp(3.5rem, 12vw, 6rem) 0;
   }
 
   .leadership-profile__body,
   .leadership-profile--reverse .leadership-profile__body {
     grid-column: 1;
-    max-width: min(100%, 42rem);
-  }
-
-  .leadership-profile--reverse .leadership-profile__body {
-    margin-left: auto;
-  }
-
-  .leadership-profile__architecture {
-    width: min(38rem, 80vw);
-    height: 26rem;
-    background-size: contain;
-  }
-
-  .leadership-profile:not(.leadership-profile--reverse) .leadership-profile__architecture {
-    top: 0;
-    right: -32%;
-    background-size: 108% auto;
-  }
-
-  .leadership-profile--reverse .leadership-profile__architecture {
-    bottom: 0;
-    left: -32%;
-    background-size: 100% auto;
-  }
-
-  .leadership-profile__reveal.is-visible .leadership-profile__architecture {
-    opacity: 0.055;
+    max-width: none;
+    padding-left: calc(var(--panel-bleed) + var(--panel-pad));
+    padding-right: calc(var(--panel-bleed) + var(--panel-pad));
+    margin-left: calc(var(--panel-bleed) * -1);
+    margin-right: calc(var(--panel-bleed) * -1);
+    border-radius: 1.5rem;
   }
 }
 
@@ -5182,10 +5301,6 @@
   .leadership-section {
     padding-top: 2.75rem;
     padding-bottom: 3.5rem;
-  }
-
-  .leadership-profile {
-    padding: 4.25rem 0;
   }
 
   .leadership-profile__portrait {
@@ -5206,39 +5321,20 @@
     padding: 0.55rem 0.86rem;
   }
 
-  .leadership-profile__architecture {
-    width: 31rem;
-    max-width: none;
-    height: 23rem;
-  }
-
-  .leadership-profile:not(.leadership-profile--reverse) .leadership-profile__architecture {
-    right: -82%;
-  }
-
-  .leadership-profile--reverse .leadership-profile__architecture {
-    left: -82%;
-  }
-
-  .leadership-profile__reveal.is-visible .leadership-profile__architecture {
-    opacity: 0.035;
+  .leadership-profile__body,
+  .leadership-profile--reverse .leadership-profile__body {
+    border-radius: 1.15rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .leadership-profile,
-  .leadership-profile__architecture,
   .leadership-profile__body > *,
   .leadership-profile__portrait img,
   .leadership-profile__links svg,
   .leadership-metric-number {
     animation: none;
     transition: none;
-  }
-
-  .leadership-profile__architecture {
-    opacity: 0.44;
-    transform: none;
   }
 
   .leadership-profile__body > * {
@@ -5252,210 +5348,344 @@
   }
 }
 
-/* Enlarged leadership cards — content-first, without decorative linework. */
+/* Leadership: alternating full-bleed profiles on soft tinted panels. */
 .leadership-section {
   padding-top: clamp(4rem, 6.5vw, 6rem);
   padding-bottom: clamp(4.5rem, 7.5vw, 7rem);
-  background:
-    radial-gradient(38rem 30rem at 0% 0%, rgb(8 126 164 / 12%), transparent 65%),
-    radial-gradient(38rem 30rem at 100% 100%, rgb(8 126 164 / 12%), transparent 65%),
-    #fff;
-}
-
-.leadership-section .leadership-pair {
-  position: relative;
-  left: 50%;
-  display: grid;
-  width: min(calc(100vw - 0.75rem), 82rem);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.5rem, 2.4vw, 2.25rem);
-  align-items: stretch;
-  margin-inline: 0;
-  transform: translateX(-50%);
-}
-
-.leadership-profile__reveal {
-  height: 100%;
-}
-
-.leadership-profile__reveal + .leadership-profile__reveal {
-  margin-top: 0;
-}
-
-.leadership-profile,
-.leadership-profile.leadership-profile--reverse {
-  display: block;
-  min-height: clamp(22rem, 30vw, 27rem);
-  height: 100%;
-  padding: clamp(1.1rem, 1.5vw, 1.5rem);
-  overflow: hidden;
-  border: 1px solid rgb(7 26 34 / 8%);
-  border-radius: 1.75rem;
-  box-shadow:
-    0 1.5rem 3rem rgb(7 26 34 / 7%),
-    0 0.4rem 1rem rgb(7 26 34 / 5%);
-  transition:
-    transform 420ms cubic-bezier(.22, 1, .36, 1),
-    box-shadow 420ms ease,
-    border-color 420ms ease;
-}
-
-.leadership-profile {
-  background: #ffffff;
-}
-
-.leadership-profile.leadership-profile--reverse {
-  background: #f2f7f8;
-}
-
-.leadership-profile:hover,
-.leadership-profile.leadership-profile--reverse:hover {
-  border-color: rgb(8 126 164 / 30%);
-  box-shadow:
-    0 2rem 4rem rgb(7 26 34 / 10%),
-    0 0.6rem 1.4rem rgb(7 26 34 / 7%);
-  transform: translateY(-0.4rem);
-}
-
-.leadership-profile__architecture {
-  display: none;
-}
-
-.leadership-profile__body,
-.leadership-profile--reverse .leadership-profile__body {
-  display: flex;
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  flex-direction: column;
-  margin: 0;
-  transform: none;
-}
-
-.leadership-profile__portrait {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  border-radius: 1.15rem;
-  border: none;
-  background: #dfeaed;
-  box-shadow: 0 1rem 2.4rem rgb(7 26 34 / 10%);
-}
-
-.leadership-profile__portrait img {
-  object-position: center top;
-}
-
-.leadership-profile--reverse .leadership-profile__portrait img {
-  transform: scale(1.07) translateX(-2.5%);
-  transform-origin: center top;
-}
-
-.leadership-profile__heading {
-  margin-top: clamp(1.25rem, 2vw, 1.75rem);
-}
-
-.leadership-profile__heading h3 {
-  color: var(--color-dark-azure);
-  font-size: clamp(2.1rem, 2.6vw, 2.4rem);
+  background: #fff;
 }
 
 .leadership-profile__heading p {
-  margin-top: 1rem;
-  color: var(--color-blue);
-  font-size: 0.9rem;
-  line-height: 1.7;
+  font-size: 0.72rem;
+}
+
+.leadership-profile__metric,
+.leadership-profile--reverse .leadership-profile__metric {
+  border-color: transparent;
+  background: var(--color-blue);
+}
+
+.leadership-profile__bio {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.leadership-profile__links a {
+  font-size: 0.72rem;
+}
+
+/* Two cards side by side per leader, each running off its own edge of the page:
+   profile card on the outer side, case-study photo card extending the other way,
+   overlapping slightly so they read as stacked layers. */
+.leadership-profile {
+  --panel-pad: clamp(2.25rem, 3.6vw, 3.25rem);
+  --panel-bleed: calc(((100vw - 100%) / 2) + 1rem);
+  /* Card width, and how much of it hides behind the profile card. The visible
+     remainder is `--peek-w` minus `--peek-tuck`. */
+  --peek-w: clamp(22rem, 33vw, 33rem);
+  --peek-tuck: clamp(7.5rem, 11vw, 11rem);
+  align-items: stretch;
+}
+
+.leadership-profile__body {
+  z-index: 1;
+  background: linear-gradient(150deg, #0b3d54 0%, #072b3c 54%, #051f2c 100%);
+  box-shadow: 0 1.5rem 4rem rgb(7 26 34 / 22%);
+}
+
+/* Dark card: everything inside flips to the light-on-dark palette. */
+.leadership-profile__heading h3 {
+  color: #fff;
+}
+
+.leadership-profile__heading p {
+  color: var(--color-azure);
+}
+
+.leadership-profile__bio {
+  color: rgb(255 255 255 / 68%);
+}
+
+.leadership-profile__links a {
+  color: #fff;
+}
+
+.leadership-profile__links a:hover,
+.leadership-profile__links a:focus-visible {
+  color: var(--color-azure);
+}
+
+.leadership-profile__links a:focus-visible {
+  box-shadow: 0 0 0 2px rgb(101 200 229 / 45%);
+}
+
+.leadership-profile__portrait {
+  border-color: rgb(255 255 255 / 18%);
+  background: #0b2c3c;
+  box-shadow: 0 0.9rem 2.6rem rgb(0 0 0 / 32%);
+}
+
+/* Solid blue pills read as mud on the dark panel; outline them instead. */
+.leadership-profile__metric,
+.leadership-profile--reverse .leadership-profile__metric {
+  border-color: rgb(101 200 229 / 38%);
+  background: rgb(101 200 229 / 10%);
+}
+
+.leadership-profile__metric > p {
+  color: var(--color-azure);
+}
+
+.leadership-profile__metric > span {
+  color: rgb(255 255 255 / 78%);
+}
+
+.leadership-profile__media {
+  position: relative;
+  z-index: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #0b2c3c;
+}
+
+@media (min-width: 1024px) {
+  .leadership-profile__body {
+    grid-row: 1;
+    grid-column: 1 / span 6;
+  }
+
+  .leadership-profile--reverse .leadership-profile__body {
+    grid-row: 1;
+    grid-column: 7 / -1;
+  }
+
+  /* A contained card that peeks out from behind the profile card — roughly half
+     of it is tucked underneath, half sticks out. It does not reach the page edge.
+     Its top and bottom edges line up with the profile card. */
+  .leadership-profile__media {
+    grid-row: 1;
+    grid-column: 7 / -1;
+    justify-self: start;
+    align-self: stretch;
+    width: var(--peek-w);
+    height: auto;
+    margin-right: 0;
+    margin-left: calc(var(--peek-tuck) * -1);
+    border-radius: 1.35rem;
+    box-shadow: 0 0.9rem 2.4rem rgb(7 26 34 / 13%);
+    will-change: transform;
+  }
+
+  .leadership-profile--reverse .leadership-profile__media {
+    grid-column: 1 / span 6;
+    justify-self: end;
+    margin-right: calc(var(--peek-tuck) * -1);
+    margin-left: 0;
+  }
+
+  /* At rest the card already sticks out halfway; hover nudges it a little
+     further out — to the right normally, to the left on the mirrored row. */
+  .leadership-profile:hover .leadership-profile__media,
+  .leadership-profile:focus-within .leadership-profile__media {
+    --media-peek-x: 1.85rem;
+    box-shadow: 0 1.4rem 3.2rem rgb(7 26 34 / 18%);
+  }
+
+  .leadership-profile--reverse:hover .leadership-profile__media,
+  .leadership-profile--reverse:focus-within .leadership-profile__media {
+    --media-peek-x: -1.85rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .leadership-profile:hover .leadership-profile__media,
+    .leadership-profile:focus-within .leadership-profile__media,
+    .leadership-profile--reverse:hover .leadership-profile__media,
+    .leadership-profile--reverse:focus-within .leadership-profile__media {
+      --media-peek-x: 0px;
+      transition: none;
+    }
+  }
+
+  .leadership-profile__reveal + .leadership-profile__reveal {
+    margin-top: clamp(2.5rem, 4vw, 4rem);
+  }
+}
+
+@media (max-width: 1023px) {
+  .leadership-profile__media {
+    grid-column: 1;
+    height: clamp(11rem, 30vw, 15rem);
+    margin-top: clamp(-2.25rem, -3vw, -1.25rem);
+    margin-right: calc(var(--panel-bleed) * -1);
+    margin-left: calc(var(--panel-bleed) * -1);
+    border-radius: 1.25rem;
+  }
+
+  .leadership-profile__reveal + .leadership-profile__reveal {
+    margin-top: 2rem;
+  }
+}
+
+.leadership-profile__media img {
+  object-position: center 45%;
+  filter: saturate(0.78) contrast(0.98) brightness(0.98);
+  transform: scale(1.04);
+  transition: transform 1200ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.leadership-profile__reveal.is-visible .leadership-profile__media img {
+  transform: scale(1);
+}
+
+/* Deepened rather than lightened, so the photo sits with the dark profile card
+   instead of looking washed out beside it. */
+.leadership-profile__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgb(5 31 44 / 14%);
+}
+
+.leadership-profile__column {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 34rem;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+/* The wrapper itself must not join the stagger — its children do. */
+.leadership-profile__body > .leadership-profile__column {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* The photo card is a grid sibling, so it needs its own reveal — it slides in
+   from the edge it runs off, which reinforces the sideways extension.
+   The reveal offset and the hover peek both drive `transform`, so they are
+   composed through variables instead of overwriting each other. */
+.leadership-profile__media {
+  --media-reveal-x: 1.6rem;
+  --media-reveal-y: 0px;
+  --media-peek-x: 0px;
+  opacity: 0;
+  transform: translate(
+    calc(var(--media-reveal-x) + var(--media-peek-x)),
+    var(--media-reveal-y)
+  );
+  transition:
+    opacity 700ms ease 240ms,
+    transform 760ms cubic-bezier(.22, 1, .36, 1),
+    box-shadow 520ms ease;
+}
+
+.leadership-profile--reverse .leadership-profile__media {
+  --media-reveal-x: -1.6rem;
+}
+
+.leadership-profile__reveal.is-visible .leadership-profile__media,
+.leadership-profile__reveal.is-visible .leadership-profile--reverse .leadership-profile__media {
+  --media-reveal-x: 0px;
+}
+
+.leadership-profile__reveal.is-visible .leadership-profile__media {
+  opacity: 1;
+}
+
+@media (max-width: 1023px) {
+  .leadership-profile__media,
+  .leadership-profile--reverse .leadership-profile__media {
+    --media-reveal-x: 0px;
+    --media-reveal-y: 1.2rem;
+  }
+
+  .leadership-profile__reveal.is-visible .leadership-profile__media {
+    --media-reveal-y: 0px;
+  }
+}
+
+.leadership-profile__column > * {
+  opacity: 0;
+  transform: translateY(1.1rem);
+  transition:
+    opacity 650ms ease,
+    transform 850ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.leadership-profile__reveal.is-visible .leadership-profile__column > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.leadership-profile__portrait,
+.leadership-profile--reverse .leadership-profile__portrait,
+.leadership-profile__heading p,
+.leadership-profile--reverse .leadership-profile__heading p,
+.leadership-profile__bio,
+.leadership-profile--reverse .leadership-profile__bio {
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .leadership-profile__metrics,
 .leadership-profile--reverse .leadership-profile__metrics {
   width: auto;
-  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
   flex-wrap: wrap;
-  margin-top: 1rem;
+  justify-content: center;
 }
 
-.leadership-profile__metric,
-.leadership-profile--reverse .leadership-profile__metric {
-  padding: 0.6rem 1rem;
-  border-color: transparent;
-  background: var(--color-blue);
+.leadership-profile__links,
+.leadership-profile--reverse .leadership-profile__links {
+  justify-content: center;
 }
 
-.leadership-profile__metric > p,
-.leadership-profile__metric > span,
-.leadership-profile--reverse .leadership-profile__metric > p,
-.leadership-profile--reverse .leadership-profile__metric > span {
-  font-size: 0.92rem;
+/* Typography tuned for a centred measure. */
+.leadership-profile__portrait {
+  width: clamp(9rem, 12vw, 10.5rem);
+  aspect-ratio: 1 / 1;
+  border-radius: 0.85rem;
+}
+
+.leadership-profile__heading h3 {
+  text-wrap: balance;
+}
+
+.leadership-profile__heading p {
+  max-width: 34ch;
+  text-wrap: balance;
 }
 
 .leadership-profile__bio {
-  max-width: 54ch;
-  margin-top: 1.1rem;
-  color: rgb(7 26 34 / 62%);
-  font-size: 1.02rem;
-  line-height: 1.6;
+  max-width: 52ch;
+  text-wrap: pretty;
 }
 
-.leadership-profile__links {
-  margin-top: auto;
-  padding-top: 1.25rem;
+.leadership-profile__metrics {
+  gap: 0.5rem 0.6rem;
 }
 
-.leadership-profile__links a {
-  color: var(--color-dark-azure);
-  font-size: 0.84rem;
-}
-
-.leadership-profile__links a:hover,
-.leadership-profile__links a:focus-visible {
-  color: var(--color-blue);
-}
-
-.leadership-profile__links a:focus-visible {
-  box-shadow: 0 0 0 2px rgb(8 126 164 / 30%);
-}
-
+/* Stacked layout: the column simply centres in the full-width panel. */
 @media (max-width: 1023px) {
-  .leadership-section .leadership-pair {
-    position: static;
-    left: auto;
-    width: 100%;
-    max-width: 46rem;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-inline: auto;
-    transform: none;
-  }
-
-  .leadership-profile,
-  .leadership-profile.leadership-profile--reverse {
-    min-height: 0;
-    padding: clamp(2.5rem, 7vw, 3.25rem);
+  .leadership-profile__column,
+  .leadership-profile--reverse .leadership-profile__column {
+    max-width: 34rem;
+    margin-right: auto;
+    margin-left: auto;
   }
 }
 
-@media (max-width: 640px) {
-  .leadership-section {
-    padding-top: 3.25rem;
-    padding-bottom: 4rem;
-  }
-
-  .leadership-profile,
-  .leadership-profile.leadership-profile--reverse {
-    padding: 1.75rem;
-    border-radius: 1.4rem;
-  }
-
-  .leadership-profile__portrait {
-    width: 100%;
-  }
-
-  .leadership-profile__heading h3 {
-    font-size: clamp(2.35rem, 9.5vw, 2.7rem);
-  }
-
-  .leadership-profile__bio {
-    font-size: 1.18rem;
+@media (prefers-reduced-motion: reduce) {
+  .leadership-profile__column > *,
+  .leadership-profile__media,
+  .leadership-profile__media img {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
@@ -5932,24 +6162,102 @@
 
 }
 
+/* Pager dots — mobile only; the deck fans out on larger screens. */
+.case-switcher__dots {
+  display: none;
+  gap: 0.55rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.case-switcher__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 28%);
+  cursor: pointer;
+  outline: none;
+  transition:
+    background 240ms ease,
+    width 320ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.case-switcher__dot:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-azure);
+}
+
+.case-switcher__dot.is-active {
+  width: 1.5rem;
+  background: var(--color-azure);
+}
+
 @media (max-width: 639px) {
   .case-feature-section__all {
     width: 100%;
     justify-content: space-between;
   }
 
+  /* There is no room to fan the deck on a phone: show one card at a time and
+     let swipe / dots move between them. */
+  .case-switcher__visual {
+    padding: 0;
+  }
+
+  .case-switcher__deck {
+    aspect-ratio: 4 / 3.5;
+    touch-action: pan-y;
+  }
+
+  .case-deck-card--layer-0,
+  .case-deck-card--layer-1,
+  .case-deck-card--layer-2,
+  .case-deck-card--layer-3,
+  .case-deck-card--layer-4,
+  .case-deck-card--layer-5 {
+    transform: none;
+  }
+
+  .case-deck-card--layer-1,
+  .case-deck-card--layer-2,
+  .case-deck-card--layer-3,
+  .case-deck-card--layer-4,
+  .case-deck-card--layer-5 {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .case-deck-card__media {
-    inset: 0 0 35% 0;
+    inset: 0 0 38% 0;
   }
 
   .case-deck-card__details {
-    inset: 65% 0 0;
-    padding-top: 1rem;
+    inset: 62% 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.95rem 1.1rem 1.1rem;
   }
 
-  .case-deck-card--layer-4 {
-    opacity: 0;
-    pointer-events: none;
+  /* Was absolutely positioned bottom-right, straight over the title. */
+  .case-deck-card__active-indicator {
+    position: static;
+    margin-top: auto;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.48rem;
+  }
+
+  .case-deck-card__title,
+  .case-deck-card--layer-0 .case-deck-card__title {
+    max-width: 100%;
+    font-size: 1.05rem;
+    line-height: 1.14;
+  }
+
+  .case-switcher__dots {
+    display: flex;
   }
 
   .case-switcher__content {
@@ -6875,7 +7183,9 @@
   }
 
   .news-minimal__heading h2 {
-    font-size: clamp(5.3rem, 25vw, 7rem);
+    font-size: clamp(3.25rem, 12vw, 4.75rem);
+    letter-spacing: -0.06em;
+    line-height: 0.86;
   }
 
   .news-minimal__card {
@@ -6899,6 +7209,11 @@
 @media (max-width: 639px) {
   .news-minimal {
     --news-minimal-bleed: 1.25rem;
+  }
+
+  .news-minimal__heading h2 {
+    margin-top: 1.25rem;
+    font-size: clamp(2.75rem, 11vw, 3.5rem);
   }
 
   .news-minimal__card {
@@ -9020,4 +9335,204 @@
 .final-contact-echo__motion {
   display: none;
   animation: none;
+}
+
+.insight-band {
+  /* 0 → 1 as the band travels through the viewport; written by JS on scroll. */
+  --band-p: 0.5;
+  position: relative;
+}
+
+.insight-band--navy {
+  background: linear-gradient(112deg, #0a3448 0%, #0b3b52 46%, #082a3a 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 8%),
+    inset 0 -1px 0 rgb(0 0 0 / 18%);
+}
+
+.insight-band--mist {
+  border-top: 1px solid rgb(7 42 55 / 9%);
+  border-bottom: 1px solid rgb(7 42 55 / 9%);
+  background: linear-gradient(180deg, #eef3f5 0%, #e7eef1 100%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+/* Barely-there dot grain so the navy surface reads as a material, not a fill.
+   Drifts a little as the band scrolls past. */
+.insight-band__grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    rgb(200 235 245 / 7%) 0.7px,
+    transparent 0.9px
+  );
+  background-size: 1.5rem 1.5rem;
+  background-position:
+    calc(var(--band-p) * 2.5rem)
+    calc(var(--band-p) * -1.75rem);
+  mask-image: linear-gradient(105deg, black, transparent 62%);
+  -webkit-mask-image: linear-gradient(105deg, black, transparent 62%);
+  pointer-events: none;
+}
+
+/* Soft light that travels across the band, driven by scroll position. */
+.insight-band__sheen {
+  position: absolute;
+  inset: -40% -25%;
+  z-index: -1;
+  transform: translate3d(calc(var(--band-p) * 46% - 23%), 0, 0);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.insight-band--navy .insight-band__sheen {
+  background: radial-gradient(
+    46% 130% at 50% 50%,
+    rgb(101 200 229 / 13%),
+    transparent 68%
+  );
+}
+
+.insight-band--mist .insight-band__sheen {
+  background: radial-gradient(
+    46% 130% at 50% 50%,
+    rgb(8 126 164 / 8%),
+    transparent 68%
+  );
+}
+
+.insight-band__stripe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  content: "";
+  pointer-events: none;
+}
+
+/* Bright cap at the top of the stripe — reads as a lit edge. */
+.insight-band__stripe::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2.25rem;
+  content: "";
+}
+
+.insight-band--navy .insight-band__stripe {
+  background: linear-gradient(
+    180deg,
+    rgb(101 200 229 / 55%),
+    rgb(8 126 164 / 34%) 62%,
+    rgb(101 200 229 / 12%)
+  );
+}
+
+.insight-band--navy .insight-band__stripe::after {
+  background: linear-gradient(180deg, var(--color-azure), transparent);
+}
+
+.insight-band--mist .insight-band__stripe {
+  background: linear-gradient(
+    180deg,
+    rgb(8 126 164 / 45%),
+    rgb(8 126 164 / 28%) 68%,
+    rgb(8 126 164 / 8%)
+  );
+}
+
+.insight-band--mist .insight-band__stripe::after {
+  background: linear-gradient(180deg, var(--color-blue), transparent);
+}
+
+
+.insight-band__aura {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 82% 8%, rgb(101 200 229 / 10%), transparent 34%),
+    radial-gradient(circle at 8% 96%, rgb(8 126 164 / 9%), transparent 36%);
+  transform: translate3d(
+    calc((var(--band-p) - 0.5) * -4rem),
+    calc((var(--band-p) - 0.5) * -1.75rem),
+    0
+  );
+  pointer-events: none;
+  will-change: transform;
+}
+
+.insight-band__eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.insight-band__lede {
+  position: relative;
+  padding-top: 1rem;
+}
+
+.insight-band__lede::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4.5rem;
+  height: 1px;
+  content: "";
+}
+
+.insight-band--mist .insight-band__lede::before {
+  background: rgb(7 42 55 / 22%);
+}
+
+/* Both bands run without the rule under the heading. */
+.insight-band__lede {
+  padding-top: 0;
+}
+
+.insight-band__lede::before {
+  display: none;
+}
+
+/* Mist band: blue circular field echoing the final CTA background. */
+.insight-band--mist {
+  background:
+    radial-gradient(circle at 50% 58%, rgb(100 199 233 / 16%), transparent 26rem),
+    linear-gradient(180deg, #eef3f5 0%, #e7eef1 100%);
+}
+
+.insight-band--mist .insight-band__aura {
+  background:
+    radial-gradient(circle at 13% 16%, rgb(8 126 164 / 13%), transparent 42%),
+    radial-gradient(circle at 87% 90%, rgb(101 200 229 / 20%), transparent 44%),
+    radial-gradient(circle at 63% 6%, rgb(101 200 229 / 11%), transparent 34%);
+}
+
+/* Faint corner rings — same device as the final CTA, scaled to a short band. */
+.insight-band--mist::before,
+.insight-band--mist::after {
+  position: absolute;
+  z-index: -1;
+  width: clamp(17rem, 30vw, 30rem);
+  aspect-ratio: 1;
+  border: 1px solid rgb(8 126 164 / 10%);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.insight-band--mist::before {
+  top: -11rem;
+  left: -6rem;
+}
+
+.insight-band--mist::after {
+  right: -8rem;
+  bottom: -12rem;
 }

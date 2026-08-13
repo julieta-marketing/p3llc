@@ -51,6 +51,8 @@ function FeaturedCaseCarousel({ projects }: { projects: CaseStudy[] }) {
   const hoverTimerRef = useRef<number | null>(null)
   const transitionTimerRef = useRef<number | null>(null)
   const transitioningRef = useRef(false)
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null)
+  const swipedRef = useRef(false)
   const activeProject = projects[activeIndex]
   const activeNumber = formatCaseNumber(activeIndex)
 
@@ -136,6 +138,43 @@ function FeaturedCaseCarousel({ projects }: { projects: CaseStudy[] }) {
     setInteractionPaused(false)
   }
 
+  function goToOffset(offset: number) {
+    const nextIndex =
+      (activeIndex + offset + projects.length) % projects.length
+    transitionToProject(nextIndex)
+  }
+
+  function handleTouchStart(event: React.TouchEvent) {
+    const touch = event.touches[0]
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY }
+    swipedRef.current = false
+    // A swipe is deliberate navigation — stop the auto-advance for good.
+    setInteractionPaused(true)
+  }
+
+  function handleTouchEnd(event: React.TouchEvent) {
+    const start = touchStartRef.current
+    touchStartRef.current = null
+    if (!start) return
+
+    const touch = event.changedTouches[0]
+    const dx = touch.clientX - start.x
+    const dy = touch.clientY - start.y
+
+    // Horizontal intent only, so vertical page scrolling still works.
+    if (Math.abs(dx) < 45 || Math.abs(dx) <= Math.abs(dy)) return
+
+    swipedRef.current = true
+    goToOffset(dx < 0 ? 1 : -1)
+  }
+
+  // Without this, the end of a swipe registers as a tap on the card link.
+  function handleCardClick(event: React.MouseEvent) {
+    if (!swipedRef.current) return
+    event.preventDefault()
+    swipedRef.current = false
+  }
+
   return (
     <Reveal
       as="section"
@@ -157,6 +196,8 @@ function FeaturedCaseCarousel({ projects }: { projects: CaseStudy[] }) {
             className="case-switcher__deck"
             role="list"
             aria-label="Featured case studies"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             {projects.map((project, index) => {
               const layer =
@@ -175,6 +216,7 @@ function FeaturedCaseCarousel({ projects }: { projects: CaseStudy[] }) {
                   aria-label={`See full case study: ${project.title}`}
                   onMouseEnter={() => scheduleProject(index)}
                   onMouseLeave={cancelScheduledProject}
+                  onClick={handleCardClick}
                   onFocus={() => {
                     setInteractionPaused(true)
                     transitionToProject(index)
@@ -218,6 +260,24 @@ function FeaturedCaseCarousel({ projects }: { projects: CaseStudy[] }) {
                 </Link>
               )
             })}
+          </div>
+
+          {/* Mobile-only pager: the fanned deck reads as one card there, so the
+              dots are what tell you the rest exist. */}
+          <div className="case-switcher__dots" aria-label="Case study pager">
+            {projects.map((project, index) => (
+              <button
+                key={project.slug}
+                type="button"
+                className={`case-switcher__dot ${index === activeIndex ? 'is-active' : ''}`}
+                aria-label={`Show case study: ${project.title}`}
+                aria-current={index === activeIndex ? 'true' : undefined}
+                onClick={() => {
+                  setInteractionPaused(true)
+                  transitionToProject(index)
+                }}
+              />
+            ))}
           </div>
         </div>
 

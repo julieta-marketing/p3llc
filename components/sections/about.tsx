@@ -4,23 +4,6 @@ import { Section } from '@/components/section'
 import { Reveal } from '@/components/reveal'
 import { partners } from '@/lib/content'
 
-const aboutCards = [
-  {
-    title: 'What Is a P3?',
-    description:
-      'A public-private partnership brings public agencies and private-sector partners together to finance, develop, and deliver public infrastructure with shared accountability.',
-    image: '/about-p3-structure.png',
-    alt: 'Partners evaluating a courthouse model, project schedule, and infrastructure financing structure',
-  },
-  {
-    title: 'Why P3 LLC?',
-    description:
-      'We bring together public-sector leadership, private-sector expertise, and a trusted network of partners to help deliver complex projects.',
-    image: '/about-partner-finance.png',
-    alt: 'Project partners reviewing civic plans, financial analysis, and a public development model',
-  },
-] as const
-
 export function About() {
   return (
     <Section id="about" className="bg-[#f5f7f7] py-24 md:py-32 lg:py-40">
@@ -31,42 +14,7 @@ export function About() {
       </Reveal>
 
       <PartnershipCards />
-      <AboutInfoCards />
     </Section>
-  )
-}
-
-function AboutInfoCards() {
-  return (
-    <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-      {aboutCards.map((card, index) => (
-        <Reveal
-          as="article"
-          key={card.title}
-          delay={120 + index * 40}
-          className="grid overflow-hidden rounded-[1.5rem] bg-white shadow-[0_18px_55px_rgba(7,26,34,0.055)] ring-1 ring-inset ring-[color:var(--color-dark-azure)]/[0.055] sm:grid-cols-[0.42fr_0.58fr]"
-        >
-          <div className="relative min-h-[14rem] sm:min-h-[19rem]">
-            <Image
-              src={card.image}
-              alt={card.alt}
-              fill
-              sizes="(min-width: 1024px) 21vw, (min-width: 640px) 42vw, 100vw"
-              className="object-cover object-center"
-            />
-          </div>
-
-          <div className="flex flex-col justify-center p-7 sm:p-8 lg:p-9">
-            <h3 className="font-sans text-[1.85rem] font-medium tracking-[-0.045em] text-[color:var(--color-dark-azure)]">
-              {card.title}
-            </h3>
-            <p className="mt-5 text-sm leading-6 text-muted-foreground">
-              {card.description}
-            </p>
-          </div>
-        </Reveal>
-      ))}
-    </div>
   )
 }
 
@@ -84,17 +32,6 @@ function PartnershipCards() {
           sizes="(min-width: 1024px) 58vw, 100vw"
           className="object-cover object-center"
         />
-
-        <div className="absolute inset-x-0 bottom-0 z-10 bg-[linear-gradient(180deg,transparent_0%,rgba(7,26,34,0.62)_32%,rgba(7,26,34,0.94)_100%)] px-7 pb-7 pt-24 text-white sm:px-9 sm:pb-9 sm:pt-32 lg:px-10 lg:pb-10">
-          <span className="font-['Poppins'] text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-azure)]">
-            Why public-private partnerships?
-          </span>
-          <p className="mt-4 max-w-[44rem] text-[1rem] leading-7 text-white/78 sm:text-[1.06rem] sm:leading-8">
-            Public-private partnerships help agencies deliver projects faster,
-            expand funding opportunities, and leverage private-sector expertise
-            to achieve better outcomes.
-          </p>
-        </div>
       </Reveal>
 
       <Reveal

@@ -8,9 +8,9 @@ import { cn } from '@/lib/utils'
 
 export function Hero() {
   return (
-    <section className="relative isolate overflow-hidden bg-[color:var(--color-dark-azure)] text-white min-[1180px]:h-[clamp(38rem,75svh,54rem)]">
+    <section className="relative isolate overflow-hidden bg-[color:var(--color-dark-azure)] text-white lg:h-[clamp(38rem,75svh,54rem)]">
       <div
-        className="executive-grid pointer-events-none absolute inset-y-0 left-0 w-full opacity-30 min-[1180px]:w-[52%]"
+        className="executive-grid pointer-events-none absolute inset-y-0 left-0 w-full opacity-30 lg:w-[52%]"
         aria-hidden="true"
       />
       <div
@@ -21,20 +21,20 @@ export function Hero() {
       <div
         className={cn(
           containerClass,
-          'hero-layout-shell relative z-10 grid grid-cols-1 border-t border-white/14 pb-14 pt-28 sm:pb-16 sm:pt-32 min-[1180px]:h-full min-[1180px]:min-h-0 min-[1180px]:grid-cols-12 min-[1180px]:items-center min-[1180px]:!pb-4 min-[1180px]:!pt-20',
+          'hero-layout-shell relative z-10 grid grid-cols-1 border-t border-white/14 pb-10 pt-[5.5rem] sm:pb-14 sm:pt-28 lg:h-full lg:min-h-0 lg:grid-cols-12 lg:items-center lg:!pb-4 lg:!pt-20',
         )}
       >
-        <div className="max-w-[44rem] min-[1180px]:col-span-5 min-[1180px]:-translate-y-2 min-[1180px]:max-w-none min-[1180px]:pr-10 xl:pr-14 2xl:pr-5">
+        <div className="max-w-[44rem] lg:col-span-5 lg:max-w-none lg:-translate-y-2 lg:pr-8 xl:pr-14 2xl:pr-5">
           <Image
             src="/p3-logo-white.png"
             alt="P3 LLC — Public Private Partners"
             width={520}
             height={162}
             priority
-            className="hero-kicker h-auto w-[8.75rem] sm:w-[10.5rem] 2xl:w-[12rem]"
+            className="hero-kicker h-auto w-[6.5rem] sm:w-[7.75rem] 2xl:w-[8.75rem]"
           />
 
-          <h1 className="mt-5 max-w-[10ch] font-sans text-[clamp(2.85rem,13.75vw,3.35rem)] font-medium leading-[0.9] tracking-[-0.06em] text-white sm:text-[clamp(2.9rem,6vw,4rem)] min-[1180px]:text-[clamp(4.25rem,4.25vw,5.1rem)]">
+          <h1 className="mt-5 max-w-[10ch] font-sans text-[clamp(2.85rem,13.75vw,3.35rem)] font-medium leading-[0.9] tracking-[-0.06em] text-white sm:text-[clamp(2.9rem,6vw,4rem)] lg:text-[clamp(3.15rem,5vw,4rem)] xl:text-[clamp(4.25rem,4.25vw,5.1rem)]">
             <span className="hero-title-mask block">
               <span className="hero-title-line block">Helping</span>
             </span>
@@ -48,7 +48,7 @@ export function Hero() {
             </span>
           </h1>
 
-          <p className="hero-copy mt-5 max-w-[40ch] font-['Poppins'] text-base font-normal leading-7 text-white/70 min-[1180px]:text-[1.1rem] min-[1180px]:leading-8 2xl:text-[1.2rem] 2xl:leading-[2.1rem]">
+          <p className="hero-copy mt-5 max-w-[40ch] font-['Poppins'] text-base font-normal leading-7 text-white/70 xl:text-[1.1rem] xl:leading-8 2xl:text-[1.2rem] 2xl:leading-[2.1rem]">
             P3 LLC helps public agencies and private-sector partners finance,
             structure, and deliver infrastructure and economic development projects.
           </p>
@@ -62,9 +62,9 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="relative z-[5] min-h-[28rem] overflow-hidden border-y border-white/14 sm:min-h-[36rem] min-[1180px]:absolute min-[1180px]:inset-y-0 min-[1180px]:right-0 min-[1180px]:min-h-0 min-[1180px]:w-[60%] min-[1180px]:rounded-bl-[3.5rem] min-[1180px]:border-y-0 min-[1180px]:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%)]">
+      <div className="relative z-[5] min-h-[20rem] overflow-hidden border-y border-white/14 sm:min-h-[26rem] lg:absolute lg:inset-y-0 lg:right-0 lg:min-h-0 lg:w-[60%] lg:rounded-bl-[3.5rem] lg:border-y-0 lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%)]">
         <div className="hero-media-enter absolute inset-0">
-          <HeroMediaCarousel className="h-full min-h-[28rem] rounded-none border-0 shadow-none sm:min-h-[36rem] min-[1180px]:min-h-full" />
+          <HeroMediaCarousel className="h-full min-h-[20rem] rounded-none border-0 shadow-none sm:min-h-[26rem] lg:min-h-full" />
 
           <div
             className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-[color:var(--color-dark-azure)]/30 via-[color:var(--color-dark-azure)]/8 to-transparent"

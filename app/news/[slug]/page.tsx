@@ -61,7 +61,7 @@ export default async function NewsDetailPage({
                     href="/news"
                     className="group inline-flex min-h-8 items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-blue)] outline-none transition-colors hover:text-[color:var(--color-navy)] focus-visible:text-[color:var(--color-navy)]"
                   >
-                    News Library
+                    All News
                     <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
                   </Link>
                 </div>
@@ -176,7 +176,7 @@ export default async function NewsDetailPage({
             <Reveal className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[color:var(--color-blue)]">
-                  News Library
+                  Articles and Updates
                 </p>
                 <h2 className="mt-4 max-w-[18ch] font-sans text-3xl font-medium leading-tight tracking-[-0.04em] text-[color:var(--color-dark-azure)] md:text-4xl">
                   {post.title}
@@ -197,7 +197,7 @@ export default async function NewsDetailPage({
                   href="/news"
                   className="group inline-flex min-h-12 w-fit items-center gap-3 rounded-full border border-[color:var(--color-navy)]/25 px-5 font-['Poppins'] text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-navy)] outline-none transition-colors hover:border-[color:var(--color-navy)] hover:bg-[color:var(--color-navy)] hover:text-white focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  Return to News Library
+                  View all News
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
                 </Link>
               </div>
