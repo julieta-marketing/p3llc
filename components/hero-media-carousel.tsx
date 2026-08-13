@@ -61,9 +61,13 @@ export function HeroMediaCarousel({ className }: HeroMediaCarouselProps) {
               src={image.src}
               alt={isActive ? image.alt : ''}
               fill
+              /* All three slides sit in the viewport at once, so without an
+                 explicit priority split they compete for bandwidth and the
+                 visible one arrives last. */
               priority={index === 0}
-              quality={100}
-              sizes="100vw"
+              loading={index === 0 ? undefined : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : 'low'}
+              sizes="(min-width: 1180px) 60vw, 100vw"
               className="object-cover"
               style={{ objectPosition: image.position }}
             />
