@@ -12,8 +12,8 @@ import { cn } from '@/lib/utils'
 const desktopNavItems = [
   'About',
   'Leadership',
-  'Case Studies',
   'Solutions',
+  'Case Studies',
   'Our Approach',
 ].map((label) => navItems.find((item) => item.label === label)!)
 

@@ -1,6 +1,10 @@
 # 在 GitHub 新增或修改 Case
 
-一个 `.md` 文件就是一个 Case。只需要修改这一份文件，首页 Case Studies、Case Library 和 Case Detail 会一起更新。
+一个 `.md` 文件就是一个 Case。只需要修改这一份文件，下面三处会一起更新：
+
+- 首页的 **Case Studies** 版块（只显示前 4 条，按文件名编号排序）
+- `/case-studies` 页面（标题为 **All Case Studies**）
+- 该案例自己的详情页 `/case-studies/文件名`
 
 ## 新增 Case
 
@@ -27,9 +31,9 @@ categories: Alternative Delivery
 ---
 ```
 
-- `title`：Library、首页和详情页共用的 Case 名称。
+- `title`：首页、`/case-studies` 和详情页共用的 Case 名称。
 - `image`：先把图片上传到 `public/case-studies/`，这里填写 `/case-studies/图片文件名.jpg`。
-- `summary`：Library、首页和详情页标题下方共用的一句话简介。
+- `summary`：首页、`/case-studies` 和详情页标题下方共用的一句话简介。
 - `categories`：从下面 4 个现有分类中选择，可填写一个或多个；多个分类用英文逗号隔开。
 
 可用分类：

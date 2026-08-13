@@ -1,6 +1,10 @@
 # 在 GitHub 新增或修改 News
 
-一篇 `.md` 文件就是一篇 News。提交文件后，网站会自动更新首页、News Library 和 News Detail。
+一篇 `.md` 文件就是一篇 News。提交文件后，网站会自动更新下面三处：
+
+- 首页的 **News** 版块
+- `/news` 页面（标题为 **News**，副标题 **Articles and Updates**）
+- 该文章自己的详情页 `/news/文件名`
 
 ## 新增 News
 
@@ -33,6 +37,17 @@ about: 原始来源或转载说明
 `new-project-announcement.md` → `/news/new-project-announcement`
 
 网站会按日期从新到旧排序，并自动生成编号。单个文件填写错误时，网站会跳过该文件，不会影响其他 News。
+
+## 在网站上对应的位置
+
+| 你改的地方 | 显示在哪里 |
+| --- | --- |
+| `title` | 首页 News 列表、`/news` 卡片、详情页大标题 |
+| `date` | 三处的日期，同时决定排序 |
+| `image` | `/news` 卡片配图、详情页主图 |
+| `summary` | `/news` 卡片的简介 |
+| `about` | 详情页的来源说明 |
+| 正文 | 详情页文章内容 |
 
 ## 修改已有 News
 

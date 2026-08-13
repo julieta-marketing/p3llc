@@ -4,6 +4,11 @@ import { Section } from '@/components/section'
 import { Reveal } from '@/components/reveal'
 import { partners } from '@/lib/content'
 
+const partnerLogos = [
+  { src: '/sunstone-cities-logo-horizontal.png', width: 813, height: 297 },
+  { src: '/fullerton-consulting-partners-logo.webp', width: 415, height: 200 },
+]
+
 export function About() {
   return (
     <Section id="about" className="bg-[#f5f7f7] py-24 md:py-32 lg:py-40">
@@ -13,17 +18,19 @@ export function About() {
         </h2>
       </Reveal>
 
-      <PartnershipCards />
+      <PartnershipStatement />
+      <PartnerCards />
     </Section>
   )
 }
 
-function PartnershipCards() {
+/** Tier one: the photograph and the joint-venture statement. */
+function PartnershipStatement() {
   return (
     <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-14 lg:mt-16 lg:grid-cols-12">
       <Reveal
         variant="image"
-        className="relative min-h-[22rem] overflow-hidden rounded-[1.5rem] bg-[color:var(--color-navy)] sm:min-h-[28rem] lg:col-span-7 lg:min-h-[38rem]"
+        className="relative min-h-[18rem] overflow-hidden rounded-[1.5rem] bg-[color:var(--color-navy)] sm:min-h-[22rem] lg:col-span-7 lg:min-h-[25rem]"
       >
         <Image
           src="/about-partner-finance-wide.png"
@@ -37,49 +44,59 @@ function PartnershipCards() {
       <Reveal
         as="article"
         delay={100}
-        className="flex min-h-[38rem] flex-col rounded-[1.5rem] bg-[color:var(--color-navy)] p-7 text-white shadow-[0_22px_60px_rgba(7,26,34,0.2)] ring-1 ring-inset ring-[color:var(--color-azure)]/18 sm:p-9 lg:col-span-5 lg:p-10"
+        className="flex flex-col justify-center rounded-[1.5rem] bg-[color:var(--color-navy)] p-7 text-white shadow-[0_22px_60px_rgba(7,26,34,0.2)] ring-1 ring-inset ring-[color:var(--color-azure)]/18 sm:p-9 lg:col-span-5 lg:p-10"
       >
-        <span className="font-['Poppins'] text-[0.56rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-azure)]">
+        <span className="font-['Poppins'] text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-azure)]">
           The partnership
         </span>
 
-        <p className="mt-7 text-[1.08rem] leading-8 text-white/78">
+        <p className="mt-6 text-[1.12rem] leading-[1.95] text-white/85 sm:text-[1.2rem] sm:leading-[2.05]">
           Public Private Partners LLC (P3 LLC) is a joint venture between
           Sunstone Cities and Fullerton Consulting Partners, bringing together
           decades of public-sector leadership, infrastructure development
           expertise, and private-sector project delivery experience.
         </p>
+      </Reveal>
+    </div>
+  )
+}
 
-        <div className="mt-5">
-          {partners.map((partner, index) => (
-            <div
-              key={partner.name}
-              className="flex items-center justify-between gap-6 border-t border-white/16 py-6 last:pb-0"
-            >
-              <div className="min-w-0">
-                <h3 className="font-['Poppins'] text-[0.68rem] font-semibold uppercase leading-5 tracking-[0.14em] text-[color:var(--color-azure)]">
-                  {partner.name}
-                </h3>
-                <p className="mt-2 text-[0.95rem] leading-7 text-white/68">
-                  {partner.description}
-                </p>
-              </div>
+/** Tier two: one card per partner firm, lighter than the statement above. */
+function PartnerCards() {
+  return (
+    <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {partners.map((partner, index) => {
+        const logo = partnerLogos[index]
 
+        return (
+          <Reveal
+            as="article"
+            key={partner.name}
+            delay={index * 90}
+            className="flex flex-col rounded-[1.5rem] bg-white p-7 shadow-[0_18px_50px_rgba(7,26,34,0.07)] ring-1 ring-inset ring-[color:var(--color-dark-azure)]/8 sm:p-9 lg:p-10"
+          >
+            {/* Fixed-height box so the two logos share a baseline despite
+                different aspect ratios. */}
+            <div className="flex h-11 items-center sm:h-12">
               <Image
-                src={
-                  index === 0
-                    ? '/sunstone-cities-logo-horizontal.png'
-                    : '/fullerton-consulting-partners-logo.webp'
-                }
+                src={logo.src}
                 alt={partner.name}
-                width={index === 0 ? 813 : 415}
-                height={index === 0 ? 297 : 200}
-                className="h-auto w-[8rem] shrink-0 brightness-0 invert opacity-90 sm:w-[8.5rem]"
+                width={logo.width}
+                height={logo.height}
+                className="h-full w-auto object-contain object-left"
               />
             </div>
-          ))}
-        </div>
-      </Reveal>
+
+            <h3 className="mt-7 font-['Poppins'] text-[0.82rem] font-semibold uppercase leading-6 tracking-[0.12em] text-[color:var(--color-blue)]">
+              {partner.name}
+            </h3>
+
+            <p className="mt-3 text-[1.08rem] leading-[1.8] text-[color:var(--color-dark-azure)]/78">
+              {partner.description}
+            </p>
+          </Reveal>
+        )
+      })}
     </div>
   )
 }

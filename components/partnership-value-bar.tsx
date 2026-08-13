@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, type RefObject } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
 
 import { Reveal } from '@/components/reveal'
 import { containerClass } from '@/components/section'
@@ -65,6 +65,46 @@ function useBandProgress(ref: RefObject<HTMLElement | null>) {
 }
 
 /**
+ * One-shot entrance trigger. The band unveils itself left-to-right rather than
+ * sliding in as a block, so this only needs to flip a class once.
+ */
+/**
+ * One-shot entrance trigger for the accent stripe. Deliberately no clip-path or
+ * mask on the band itself — a live clipping edge gets re-antialiased against
+ * the page background on every scroll frame and reads as a pale hairline.
+ */
+function useBandReveal(ref: RefObject<HTMLElement | null>) {
+  const [revealed, setRevealed] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    if (
+      typeof IntersectionObserver === 'undefined' ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      setRevealed(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        setRevealed(true)
+        observer.disconnect()
+      },
+      { threshold: 0, rootMargin: '0px 0px -12% 0px' },
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [ref])
+
+  return revealed
+}
+
+/**
  * Compact full-bleed banner used to bracket the leadership section.
  * Typography-led: no photography, no pattern fills — a left accent stripe,
  * a display heading, and a lede beneath it. Ambient layers drift with scroll.
@@ -79,6 +119,7 @@ function InsightBand({
   const bandRef = useRef<HTMLElement>(null)
 
   useBandProgress(bandRef)
+  const revealed = useBandReveal(bandRef)
 
   return (
     <aside
@@ -86,6 +127,7 @@ function InsightBand({
       className={cn(
         'insight-band relative isolate overflow-hidden',
         isNavy ? 'insight-band--navy text-white' : 'insight-band--mist',
+        revealed && 'is-revealed',
       )}
       aria-labelledby={id}
     >
@@ -100,7 +142,7 @@ function InsightBand({
           <h2
             id={id}
             className={cn(
-              'font-sans text-[1.9rem] font-medium leading-[1.05] tracking-[-0.05em] sm:text-[2.35rem] lg:whitespace-nowrap lg:text-[2.8rem]',
+              'font-sans text-[1.6rem] font-medium leading-[1.08] tracking-[-0.045em] sm:text-[1.95rem] lg:whitespace-nowrap lg:text-[2.3rem]',
               isNavy ? 'text-white' : 'text-[color:var(--color-dark-azure)]',
             )}
           >
@@ -111,7 +153,7 @@ function InsightBand({
         <Reveal delay={140} className="insight-band__lede mt-3 lg:mt-4">
           <p
             className={cn(
-              'text-[1.35rem] leading-9 sm:text-[1.5rem] sm:leading-10 lg:text-[1.62rem] lg:leading-[2.5rem]',
+              'text-[1.12rem] leading-8 sm:text-[1.22rem] sm:leading-9 lg:text-[1.32rem] lg:leading-[2.15rem]',
               isNavy ? 'text-white/78' : 'text-[color:var(--color-dark-azure)]/72',
             )}
           >

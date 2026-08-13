@@ -7,19 +7,19 @@ import { services } from '@/lib/content'
 
 const serviceVisuals = [
   {
-    image: '/solutions/alternative-financing-building.png',
+    image: '/solutions/alternative-financing-towers.jpg',
     backClass: 'bg-[color:var(--color-dark-azure)]',
   },
   {
-    image: '/solutions/alternative-delivery-v2.png',
+    image: '/solutions/alternative-delivery-wilshire.jpg',
     backClass: 'bg-[color:var(--color-navy)]',
   },
   {
-    image: '/solutions/expert-network-building.png',
+    image: '/solutions/expert-network-lattice.jpg',
     backClass: 'bg-[color:var(--color-blue)]',
   },
   {
-    image: '/solutions/economic-development-v2.png',
+    image: '/solutions/economic-development-canyon.jpg',
     backClass: 'bg-[#155a72]',
   },
 ] as const

@@ -6,23 +6,21 @@ import { Reveal } from '@/components/reveal'
 import { NewsletterForm } from '@/components/newsletter-form'
 import { newsPosts, type NewsPost } from '@/lib/news'
 
-const fallbackNewsroomImages = [
-  {
-    src: '/news/long-beach-civic-center.jpg',
-    className: 'news-minimal__image--wide',
-  },
-  {
-    src: '/about-generated-public-waterfront.png',
-    className: 'news-minimal__image--standard',
-  },
-  {
-    src: '/service-alternative-financing.jpg',
-    className: 'news-minimal__image--compact',
-  },
-  {
-    src: '/case-studies/george-deukmejian-courthouse-approved.jpg',
-    className: 'news-minimal__image--standard',
-  },
+/**
+ * Photography already used elsewhere on the site. Reusing the exact same paths
+ * means the browser has these cached by the time it reaches the newsroom, so
+ * the strip costs almost nothing. The oversized hero JPEGs are deliberately
+ * excluded.
+ */
+const siteImages = [
+  '/solutions/alternative-financing-towers.jpg',
+  '/case-studies/long-beach-civic-center-approved.webp',
+  '/solutions/alternative-delivery-wilshire.jpg',
+  '/case-studies/george-deukmejian-courthouse-approved.jpg',
+  '/solutions/expert-network-lattice.jpg',
+  '/case-studies/long-beach-convention-center-approved.jpg',
+  '/solutions/economic-development-canyon.jpg',
+  '/case-studies/queen-mary-approved.png',
 ] as const
 
 const newsImageClasses = [
@@ -100,12 +98,17 @@ export function News() {
 }
 
 function NewsFilm({ posts }: { posts: NewsPost[] }) {
-  const newsroomImages = posts.length
-    ? Array.from({ length: Math.max(4, posts.length) }, (_, index) => ({
-        src: posts[index % posts.length].image,
-        className: newsImageClasses[index % newsImageClasses.length],
-      }))
-    : fallbackNewsroomImages
+  // Post images lead, then the rest of the site's photography. De-duplicated:
+  // the previous version padded to four slots with `index % posts.length`, so a
+  // single post produced the same picture four times over.
+  const sources = Array.from(
+    new Set<string>([...posts.map((post) => post.image), ...siteImages]),
+  )
+
+  const newsroomImages = sources.map((src, index) => ({
+    src,
+    className: newsImageClasses[index % newsImageClasses.length],
+  }))
 
   return (
     <div

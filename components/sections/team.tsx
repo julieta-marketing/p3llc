@@ -101,20 +101,32 @@ function LeaderCard({ member, index }: { member: TeamMember; index: number }) {
 
 function AnimatedMetric({ value }: { value: string }) {
   const match = value.match(/^(\$?)(\d+)([A-Za-z]?)(\+?)$/)
-  const [displayValue, setDisplayValue] = useState(match ? '0' : null)
+  const target = match ? Number(match[2]) : null
+
+  // Seeded with the final number, not "0". If the count-up never runs — mobile,
+  // reduced motion, no IntersectionObserver — the metric still reads correctly
+  // instead of being stuck on zero.
+  const [displayValue, setDisplayValue] = useState(
+    target === null ? null : String(target),
+  )
   const [isAnimating, setIsAnimating] = useState(false)
   const metricRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    if (!match || !metricRef.current) return
+    if (target === null || !metricRef.current) return
 
-    const target = Number(match[2])
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    // The count-up is a desktop flourish; below 1024px the metric is static.
+    const canAnimate =
+      typeof IntersectionObserver !== 'undefined' &&
+      window.matchMedia('(min-width: 1024px)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    if (reduceMotion) {
+    if (!canAnimate) {
       setDisplayValue(String(target))
       return
     }
+
+    setDisplayValue('0')
 
     let frameId = 0
     let hasAnimated = false
@@ -158,7 +170,9 @@ function AnimatedMetric({ value }: { value: string }) {
 
         frameId = requestAnimationFrame(tick)
       },
-      { threshold: 0.55 },
+      // 0.55 was fragile: the pill is small and never cleared the ratio on
+      // some viewports, leaving the number frozen at its start value.
+      { threshold: 0.2 },
     )
 
     observer.observe(element)
@@ -167,7 +181,7 @@ function AnimatedMetric({ value }: { value: string }) {
       observer.disconnect()
       cancelAnimationFrame(frameId)
     }
-  }, [value])
+  }, [target])
 
   if (!match) return <>{value}</>
 

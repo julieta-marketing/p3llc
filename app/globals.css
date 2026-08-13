@@ -3289,6 +3289,45 @@
   height: 1rem;
 }
 
+/* Tablet tier. Same problem as phones: the container height is governed by a
+   rem floor while the tile offsets were in svh, so the tiles bunched up in the
+   middle and left dead bands top and bottom. Both are in rem here. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .case-contact-visual,
+  .case-contact-visual__stage {
+    min-height: 52rem;
+  }
+
+  /* No tile-free band wide enough for the mid-right filler at this size. */
+  .case-contact-visual__tile--two {
+    display: none;
+  }
+
+  .case-contact-visual__tile--one {
+    --contact-out-x: -29vw;
+    --contact-out-y: -17rem;
+  }
+
+  .case-contact-visual__tile--three {
+    --contact-out-x: 27vw;
+    --contact-out-y: -14.5rem;
+  }
+
+  .case-contact-visual__tile--four {
+    --contact-out-x: -24vw;
+    --contact-out-y: 15rem;
+  }
+
+  .case-contact-visual__tile--six {
+    --contact-out-x: 31vw;
+    --contact-out-y: 17.5rem;
+  }
+
+  .case-contact-visual__content {
+    padding: 4rem 1.5rem;
+  }
+}
+
 @media (max-width: 639px) {
   .case-contact-visual__tile {
     border-radius: 1.1rem;
@@ -5381,8 +5420,9 @@
   --panel-pad: clamp(2.25rem, 3.6vw, 3.25rem);
   --panel-bleed: calc(((100vw - 100%) / 2) + 1rem);
   /* Card width, and how much of it hides behind the profile card. The visible
-     remainder is `--peek-w` minus `--peek-tuck`. */
-  --peek-w: clamp(22rem, 33vw, 33rem);
+     remainder is `--peek-w` minus `--peek-tuck` — widening the card while the
+     tuck stays put is what increases how much sticks out. */
+  --peek-w: clamp(32rem, 50vw, 50rem);
   --peek-tuck: clamp(7.5rem, 11vw, 11rem);
   align-items: stretch;
 }
@@ -5483,25 +5523,34 @@
     margin-left: 0;
   }
 
-  /* At rest the card already sticks out halfway; hover nudges it a little
-     further out — to the right normally, to the left on the mirrored row. */
-  .leadership-profile:hover .leadership-profile__media,
-  .leadership-profile:focus-within .leadership-profile__media {
-    --media-peek-x: 1.85rem;
-    box-shadow: 0 1.4rem 3.2rem rgb(7 26 34 / 18%);
+  /* Hover moves the profile card, not the photo: it slides further over the
+     photo card, so the layer carrying the leader's information is the one that
+     comes forward. The photo stays put. */
+  .leadership-profile__body {
+    --body-peek-x: 0px;
+    transform: translateX(var(--body-peek-x));
+    transition:
+      transform 620ms cubic-bezier(.22, 1, .36, 1),
+      box-shadow 520ms ease;
   }
 
-  .leadership-profile--reverse:hover .leadership-profile__media,
-  .leadership-profile--reverse:focus-within .leadership-profile__media {
-    --media-peek-x: -1.85rem;
+  .leadership-profile:hover .leadership-profile__body,
+  .leadership-profile:focus-within .leadership-profile__body {
+    --body-peek-x: 1.85rem;
+    box-shadow: 0 1.9rem 4.6rem rgb(7 26 34 / 28%);
+  }
+
+  .leadership-profile--reverse:hover .leadership-profile__body,
+  .leadership-profile--reverse:focus-within .leadership-profile__body {
+    --body-peek-x: -1.85rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .leadership-profile:hover .leadership-profile__media,
-    .leadership-profile:focus-within .leadership-profile__media,
-    .leadership-profile--reverse:hover .leadership-profile__media,
-    .leadership-profile--reverse:focus-within .leadership-profile__media {
-      --media-peek-x: 0px;
+    .leadership-profile:hover .leadership-profile__body,
+    .leadership-profile:focus-within .leadership-profile__body,
+    .leadership-profile--reverse:hover .leadership-profile__body,
+    .leadership-profile--reverse:focus-within .leadership-profile__body {
+      --body-peek-x: 0px;
       transition: none;
     }
   }
@@ -5528,7 +5577,7 @@
 
 .leadership-profile__media img {
   object-position: center 45%;
-  filter: saturate(0.78) contrast(0.98) brightness(0.98);
+  filter: saturate(0.55) contrast(0.92) brightness(0.9);
   transform: scale(1.04);
   transition: transform 1200ms cubic-bezier(.22, 1, .36, 1);
 }
@@ -5537,13 +5586,41 @@
   transform: scale(1);
 }
 
-/* Deepened rather than lightened, so the photo sits with the dark profile card
-   instead of looking washed out beside it. */
+/* Colour mask in the profile card's own navy. Densest on the tucked side so the
+   photo reads as one continuous surface with the card and stays a supporting
+   layer rather than competing with the copy. */
 .leadership-profile__media::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgb(5 31 44 / 14%);
+  background: linear-gradient(
+    to left,
+    rgb(6 42 58 / 34%) 0%,
+    rgb(6 42 58 / 50%) 52%,
+    rgb(7 43 60 / 66%) 100%
+  );
+}
+
+.leadership-profile--reverse .leadership-profile__media::after {
+  background: linear-gradient(
+    to right,
+    rgb(6 42 58 / 34%) 0%,
+    rgb(6 42 58 / 50%) 52%,
+    rgb(7 43 60 / 66%) 100%
+  );
+}
+
+/* Stacked on mobile: the card sits under the profile card, so the mask runs
+   top-down instead of sideways. */
+@media (max-width: 1023px) {
+  .leadership-profile__media::after,
+  .leadership-profile--reverse .leadership-profile__media::after {
+    background: linear-gradient(
+      to bottom,
+      rgb(7 43 60 / 60%) 0%,
+      rgb(6 42 58 / 44%) 100%
+    );
+  }
 }
 
 .leadership-profile__column {
@@ -5564,22 +5641,16 @@
 }
 
 /* The photo card is a grid sibling, so it needs its own reveal — it slides in
-   from the edge it runs off, which reinforces the sideways extension.
-   The reveal offset and the hover peek both drive `transform`, so they are
-   composed through variables instead of overwriting each other. */
+   from the edge it runs off, which reinforces the sideways extension. It no
+   longer reacts to hover; that belongs to the profile card. */
 .leadership-profile__media {
   --media-reveal-x: 1.6rem;
   --media-reveal-y: 0px;
-  --media-peek-x: 0px;
   opacity: 0;
-  transform: translate(
-    calc(var(--media-reveal-x) + var(--media-peek-x)),
-    var(--media-reveal-y)
-  );
+  transform: translate(var(--media-reveal-x), var(--media-reveal-y));
   transition:
     opacity 700ms ease 240ms,
-    transform 760ms cubic-bezier(.22, 1, .36, 1),
-    box-shadow 520ms ease;
+    transform 760ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .leadership-profile--reverse .leadership-profile__media {
@@ -9343,6 +9414,44 @@
   position: relative;
 }
 
+/* Accent stripe draws down just behind the leading edge. */
+.insight-band__stripe {
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1) 140ms;
+}
+
+.insight-band.is-revealed .insight-band__stripe {
+  transform: scaleY(1);
+}
+
+/* Copy is carried in horizontally so it reads as part of the same gesture,
+   instead of the default vertical fade. */
+.insight-band .reveal {
+  transform: translate3d(-1.75rem, 0, 0);
+}
+
+.insight-band .reveal.is-visible {
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .insight-band {
+    clip-path: none;
+    transition: none;
+  }
+
+  .insight-band__stripe {
+    transform: none;
+    transition: none;
+  }
+
+  .insight-band .reveal,
+  .insight-band .reveal.is-visible {
+    transform: none;
+  }
+}
+
 .insight-band--navy {
   background: linear-gradient(112deg, #0a3448 0%, #0b3b52 46%, #082a3a 100%);
   box-shadow:
@@ -9350,11 +9459,10 @@
     inset 0 -1px 0 rgb(0 0 0 / 18%);
 }
 
+/* No border: the band sits between a white section and a near-black one, and a
+   pale hairline against that dark edge reads as a stray white line. */
 .insight-band--mist {
-  border-top: 1px solid rgb(7 42 55 / 9%);
-  border-bottom: 1px solid rgb(7 42 55 / 9%);
   background: linear-gradient(180deg, #eef3f5 0%, #e7eef1 100%);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 70%);
 }
 
 /* Barely-there dot grain so the navy surface reads as a material, not a fill.
@@ -9394,12 +9502,12 @@
   );
 }
 
-.insight-band--mist .insight-band__sheen {
-  background: radial-gradient(
-    46% 130% at 50% 50%,
-    rgb(8 126 164 / 8%),
-    transparent 68%
-  );
+/* No sheen on the light band: at 8-bit colour depth a low-opacity radial on a
+   flat pale surface bands into a visible arc. The navy band has dot grain over
+   it, which hides the same transition. */
+.insight-band--mist .insight-band__sheen,
+.insight-band--mist .insight-band__aura {
+  display: none;
 }
 
 .insight-band__stripe {
@@ -9412,40 +9520,12 @@
   pointer-events: none;
 }
 
-/* Bright cap at the top of the stripe — reads as a lit edge. */
-.insight-band__stripe::after {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 2.25rem;
-  content: "";
-}
-
 .insight-band--navy .insight-band__stripe {
-  background: linear-gradient(
-    180deg,
-    rgb(101 200 229 / 55%),
-    rgb(8 126 164 / 34%) 62%,
-    rgb(101 200 229 / 12%)
-  );
-}
-
-.insight-band--navy .insight-band__stripe::after {
-  background: linear-gradient(180deg, var(--color-azure), transparent);
+  background: var(--color-azure);
 }
 
 .insight-band--mist .insight-band__stripe {
-  background: linear-gradient(
-    180deg,
-    rgb(8 126 164 / 45%),
-    rgb(8 126 164 / 28%) 68%,
-    rgb(8 126 164 / 8%)
-  );
-}
-
-.insight-band--mist .insight-band__stripe::after {
-  background: linear-gradient(180deg, var(--color-blue), transparent);
+  background: var(--color-blue);
 }
 
 

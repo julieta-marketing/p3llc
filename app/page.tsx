@@ -23,8 +23,8 @@ export default function HomePage() {
         <PartnershipValueBar />
         <Team />
         <WhyP3Bar />
-        <CaseStudies projects={caseStudies.slice(0, 4)} />
         <Services />
+        <CaseStudies projects={caseStudies.slice(0, 4)} />
         <CaseContactCta />
         <div className="bg-[linear-gradient(180deg,#041820_0%,#063847_38%,#063847_64%,#041820_100%)]">
           <WhoWeServe />

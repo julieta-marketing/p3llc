@@ -43,12 +43,19 @@ project settings. Local `.env.local` values are not uploaded automatically.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Managing News in GitHub
+## Managing content in GitHub
 
-News does not use a database or a separate content API. Each Markdown file in
-[`content/news`](content/news/README.md) is one article. Follow that folder's
-template and instructions to add or edit News directly in GitHub; the next
-deployment rebuild will update the homepage, News Library, and News Detail page.
+Neither News nor Case Studies uses a database or a separate content API — each
+Markdown file is one entry, and the next deployment rebuild picks it up.
+
+| Content | Folder | Images | Pages it updates |
+| --- | --- | --- | --- |
+| News | [`content/news`](content/news/README.md) | `public/news/` | Homepage News section, `/news`, `/news/[slug]` |
+| Case Studies | [`content/cases`](content/cases/README.md) | `public/case-studies/` | Homepage Case Studies section (first 4), `/case-studies`, `/case-studies/[slug]` |
+
+Each folder has a `_template.md` and a `README.md` written for non-developers.
+A file that fails validation is skipped with a console error rather than
+breaking the build, so one bad entry cannot take the site down.
 
 ## Learn More
 
