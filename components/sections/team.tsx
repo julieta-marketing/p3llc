@@ -51,8 +51,13 @@ function LeaderCard({ member, index }: { member: TeamMember; index: number }) {
                 src={member.image}
                 alt={`Portrait of ${member.name}`}
                 fill
-                sizes="(min-width: 1024px) 34rem, calc(100vw - 3.5rem)"
+                sizes="(min-width: 1024px) 12rem, 10rem"
                 className="object-cover object-top"
+                style={{
+                  transform: `scale(${member.portraitZoom ?? 1.035}) translate(${
+                    member.portraitOffsetX ?? '0%'
+                  }, ${member.portraitOffsetY ?? '0%'})`,
+                }}
               />
             </div>
 

@@ -181,8 +181,10 @@ export function WhyP3Bar() {
     <InsightBand
       id="why-p3-band-title"
       title="Why P3 LLC?"
+      // Same navy treatment as the band above, so the pair reads as bookends
+      // around the leadership section.
       body="We bring together public-sector leadership, private-sector expertise, and a trusted network of partners to help deliver complex projects."
-      tone="mist"
+      tone="navy"
     />
   )
 }

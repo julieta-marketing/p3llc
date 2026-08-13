@@ -4236,7 +4236,8 @@
   content: "/";
 }
 
-.case-library-card__body h2 {
+.case-library-card__body h2,
+.case-library-card__body h3 {
   min-height: 2.2em;
   margin-top: 0.85rem;
   font-size: clamp(1.35rem, 2vw, 1.75rem);
@@ -7142,7 +7143,11 @@
   will-change: transform;
 }
 
-.news-minimal__film:hover .news-minimal__film-track {
+/* `:focus-within` as well as `:hover` — a hover-only pause leaves keyboard and
+   touch users with no way to stop the motion (WCAG 2.2.2). */
+.news-minimal__film:hover .news-minimal__film-track,
+.news-minimal__film:focus-within .news-minimal__film-track,
+.news-minimal__card:focus-within .news-minimal__film-track {
   animation-play-state: paused;
 }
 
@@ -7314,6 +7319,21 @@
 
   .news-minimal__image--compact {
     width: 9rem;
+  }
+}
+
+/* The card's min-height is sized for the "Coming soon." empty state, which
+   centres a large headline. With real posts the content is far shorter, so the
+   leftover space rendered as a dark blank band under the film strip — most
+   obvious on phones, where the reserved height is 34rem. Declared after the
+   breakpoint blocks above so it wins on equal specificity. */
+.news-minimal__card--has-posts {
+  min-height: clamp(20rem, 26vw, 26rem);
+}
+
+@media (max-width: 767px) {
+  .news-minimal__card--has-posts {
+    min-height: 0;
   }
 }
 
@@ -9406,6 +9426,31 @@
 .final-contact-echo__motion {
   display: none;
   animation: none;
+}
+
+/* Pause control for the hero slideshow. Deliberately quiet, but a real 44px
+   target with a visible focus ring rather than a decorative dot. */
+.hero-carousel__toggle {
+  border: 1px solid rgb(255 255 255 / 28%);
+  background: rgb(7 26 34 / 45%);
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5rem);
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    opacity 220ms ease;
+  opacity: 0.62;
+}
+
+.hero-carousel__toggle:hover,
+.hero-carousel__toggle:focus-visible {
+  border-color: var(--color-azure);
+  background: rgb(7 26 34 / 72%);
+  opacity: 1;
+}
+
+.hero-carousel__toggle:focus-visible {
+  box-shadow: 0 0 0 3px rgb(101 200 229 / 45%);
 }
 
 .insight-band {

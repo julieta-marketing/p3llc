@@ -245,6 +245,14 @@ export type TeamMember = {
     label: string
   }>
   image: string
+  /**
+   * Headshot framing. The two source photos are cropped very differently — one
+   * is a tight head-and-shoulders, the other a half-body — so these normalise
+   * the rendered face size between the cards. Defaults: zoom 1.035, no offset.
+   */
+  portraitZoom?: number
+  portraitOffsetX?: string
+  portraitOffsetY?: string
   /** Decorative case-study photo that fills the inner half of the leadership panel. */
   caseImage: string
   /** Alt text / caption for the case-study photo. */
@@ -283,6 +291,11 @@ export const team: TeamMember[] = [
       { value: 'Public + Private', label: 'Partnership leadership' },
     ],
     image: '/leadership-john-keisler.jpg',
+    // Source is a half-body portrait: the head is 27% of the frame versus 56%
+    // in Jeff's headshot, so it needs a 1.6x crop to match face size.
+    portraitZoom: 1.6,
+    portraitOffsetX: '-2.8%',
+    portraitOffsetY: '12.2%',
     caseImage: '/case-studies/queen-mary-approved.png',
     caseImageAlt: 'Queen Mary',
     linkedin: 'https://www.linkedin.com/in/jpkeisler/',

@@ -49,13 +49,13 @@ export default function ContactPage() {
                 <Reveal>
                   <p className="text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-[#67cce5]">Project brief / 01</p>
                   <h2 className="mt-8 max-w-[10ch] font-serif text-3xl leading-[1.05] tracking-[-0.03em] !text-white sm:text-4xl">Start with a conversation.</h2>
-                  <p className="mt-6 max-w-[34ch] text-sm leading-6 text-white/46">
+                  <p className="mt-6 max-w-[34ch] text-sm leading-6 text-white/58">
                     Whether you are exploring an idea or advancing an active
                     project, we are glad to help you identify potential next
                     steps and resources.
                   </p>
                   <div className="mt-12 border-t border-white/10 pt-6">
-                    <p className="text-[0.56rem] font-semibold uppercase tracking-[0.18em] text-white/56">Direct contact</p>
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/62">Direct contact</p>
                     <ul className="mt-5 flex flex-col gap-4">
                       {contactInfo.emails.map((email) => (
                         <li key={email}>
@@ -74,15 +74,15 @@ export default function ContactPage() {
                       ))}
                     </ul>
                   </div>
-                  <div className="mt-14 flex items-center gap-3 text-[0.54rem] uppercase tracking-[0.18em] text-white/55">
+                  <div className="mt-14 flex items-center gap-3 text-[0.68rem] uppercase tracking-[0.18em] text-white/62">
                     <span className="h-px w-10 bg-[#67cce5]/50" /> Confidential inquiry
                   </div>
                 </Reveal>
               </aside>
               <Reveal className="p-7 sm:p-9 lg:col-span-8 lg:p-11 xl:p-14">
                 <div className="mb-9 flex items-center justify-between border-b border-white/10 pb-5">
-                  <p className="text-[0.6rem] font-semibold uppercase tracking-[0.19em] text-white/50">Tell us what you are working on</p>
-                  <span className="text-[0.55rem] tabular-nums tracking-[0.15em] text-white/52">02 / 02</span>
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.19em] text-white/62">Tell us what you are working on</p>
+                  <span className="text-[0.68rem] tabular-nums tracking-[0.15em] text-white/62">02 / 02</span>
                 </div>
                 <ContactForm />
               </Reveal>

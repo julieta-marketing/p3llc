@@ -4,9 +4,13 @@ import { Section } from '@/components/section'
 import { Reveal } from '@/components/reveal'
 import { partners } from '@/lib/content'
 
+/**
+ * Both files are trimmed to their artwork, no transparent padding. That is what
+ * lets a shared box height render the two marks at the same optical size.
+ */
 const partnerLogos = [
-  { src: '/sunstone-cities-logo-horizontal.png', width: 813, height: 297 },
-  { src: '/fullerton-consulting-partners-logo.webp', width: 415, height: 200 },
+  { src: '/sunstone-cities-logo-horizontal.png', width: 784, height: 275 },
+  { src: '/fullerton-consulting-partners-logo.webp', width: 355, height: 103 },
 ]
 
 export function About() {
@@ -33,8 +37,8 @@ function PartnershipStatement() {
         className="relative min-h-[18rem] overflow-hidden rounded-[1.5rem] bg-[color:var(--color-navy)] sm:min-h-[22rem] lg:col-span-7 lg:min-h-[25rem]"
       >
         <Image
-          src="/about-partner-finance-wide.png"
-          alt="Project partners reviewing infrastructure plans, financial schedules, and a civic development model"
+          src="/case-studies/george-deukmejian-courthouse-approved.jpg"
+          alt="The George Deukmejian Courthouse in Long Beach at dusk, delivered through a DBFOM public-private partnership"
           fill
           sizes="(min-width: 1024px) 58vw, 100vw"
           className="object-cover object-center"

@@ -83,7 +83,9 @@ export default function NewsLibraryPage() {
                         <span>{post.publication}</span>
                         <time dateTime={post.date}>{post.displayDate}</time>
                       </div>
-                      <h2>{post.title}</h2>
+                      {/* h3, not h2 — the section already owns an h2 and these
+                          are subordinate to it. */}
+                      <h3>{post.title}</h3>
                       <p>{post.introduction}</p>
                       <span className="case-library-card__link">
                         Read full story

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { Pause, Play } from 'lucide-react'
 
 import { heroImages } from '@/lib/content'
 import { cn } from '@/lib/utils'
@@ -15,6 +16,9 @@ type HeroMediaCarouselProps = {
 export function HeroMediaCarousel({ className }: HeroMediaCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [hasReducedMotion, setHasReducedMotion] = useState(false)
+  /* WCAG 2.2.2 requires an in-page way to stop content that moves for more
+     than five seconds. Honouring prefers-reduced-motion is not a substitute. */
+  const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -25,15 +29,17 @@ export function HeroMediaCarousel({ className }: HeroMediaCarouselProps) {
     return () => mediaQuery.removeEventListener('change', updatePreference)
   }, [])
 
+  const isPlaying = !hasReducedMotion && !isPaused
+
   useEffect(() => {
-    if (hasReducedMotion) return
+    if (!isPlaying) return
 
     const interval = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % heroImages.length)
     }, AUTOPLAY_MS)
 
     return () => window.clearInterval(interval)
-  }, [hasReducedMotion])
+  }, [isPlaying])
 
   return (
     <div
@@ -74,6 +80,28 @@ export function HeroMediaCarousel({ className }: HeroMediaCarouselProps) {
           </div>
         )
       })}
+
+      {/* Hidden when the OS already asks for reduced motion — nothing is
+          moving, so a pause control would be misleading. */}
+      {!hasReducedMotion && (
+        <button
+          type="button"
+          onClick={() => setIsPaused((paused) => !paused)}
+          aria-pressed={isPaused}
+          className="hero-carousel__toggle absolute bottom-4 right-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full text-white outline-none sm:bottom-5 sm:right-5"
+        >
+          {isPaused ? (
+            <Play className="h-4 w-4" aria-hidden="true" />
+          ) : (
+            <Pause className="h-4 w-4" aria-hidden="true" />
+          )}
+          <span className="sr-only">
+            {isPaused
+              ? 'Play the background image slideshow'
+              : 'Pause the background image slideshow'}
+          </span>
+        </button>
+      )}
     </div>
   )
 }

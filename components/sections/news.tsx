@@ -30,8 +30,15 @@ const newsImageClasses = [
   'news-minimal__image--standard',
 ] as const
 
+/**
+ * How many stories the homepage teases. `newsPosts` arrives sorted newest-first,
+ * so this is simply the latest one; everything else lives on /news.
+ */
+const HOMEPAGE_POST_COUNT = 1
+
 export function News() {
   const publishedCount = newsPosts.length
+  const featuredPosts = newsPosts.slice(0, HOMEPAGE_POST_COUNT)
 
   return (
     <Section id="news" className="news-minimal">
@@ -41,7 +48,12 @@ export function News() {
           <NewsletterForm id="news-email" variant="news" />
         </header>
 
-        <section className="news-minimal__card" aria-label="Articles and updates">
+        <section
+          className={`news-minimal__card${
+            publishedCount > 0 ? ' news-minimal__card--has-posts' : ''
+          }`}
+          aria-label="Articles and updates"
+        >
           {publishedCount === 0 ? (
             <div className="news-minimal__empty" aria-label="Articles and updates coming soon">
               <div className="news-minimal__empty-kicker">
@@ -66,7 +78,7 @@ export function News() {
                 <Link href="/news">View all</Link>
               </div>
               <div className="news-minimal__list">
-                {newsPosts.map((post) => (
+                {featuredPosts.map((post) => (
                   <Link
                     key={post.slug}
                     href={`/news/${post.slug}`}
