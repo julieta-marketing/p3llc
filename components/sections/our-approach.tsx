@@ -9,15 +9,9 @@ export function OurApproach() {
       className="approach-suite-section overflow-hidden !bg-transparent !pb-20 !pt-0 text-[color:var(--color-dark-azure)] sm:!pb-24 lg:!pb-32"
     >
       <div className="public-approach">
-        <Reveal className="public-approach__intro">
-          <div className="public-suite__kicker">
-            <span>02</span>
-            <span>From vision to delivery</span>
-          </div>
-          <h2 className="mt-5 font-sans text-[2.8rem] font-medium leading-[0.98] tracking-normal text-[color:var(--color-dark-azure)] sm:text-[4rem] lg:text-[5.4rem]">
-            Our Approach
-          </h2>
-          <p className="mt-6 max-w-[39rem] text-lg leading-8 text-[color:var(--muted-foreground)] md:text-xl md:leading-9">
+        <Reveal className="delivery-suite-intro">
+          <h2>Our Approach</h2>
+          <p>
             A practical sequence for turning public priorities into structured,
             partner-ready projects.
           </p>

@@ -12,7 +12,7 @@ type TeamMember = (typeof team)[number]
 
 export function Team() {
   return (
-    <Section id="leadership" className="leadership-section bg-white">
+    <Section id="leadership" className="leadership-section bg-[color:var(--surface-1)]">
       <Reveal>
         <h2 className="font-sans text-[2.45rem] font-medium leading-[1.01] tracking-[-0.05em] text-[color:var(--color-dark-azure)] sm:text-[3.3rem] lg:text-[4.3rem]">
           Leadership

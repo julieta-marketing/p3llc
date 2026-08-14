@@ -6,9 +6,9 @@ type Tone = 'default' | 'soft' | 'panel' | 'dark'
 
 const toneClass: Record<Tone, string> = {
   default: 'bg-background text-foreground',
-  soft: 'bg-[color:var(--color-lgb-soft)] text-foreground',
-  panel: 'bg-[#f5f7f7] text-foreground',
-  dark: 'bg-[color:var(--color-dark-azure)] text-white',
+  soft: 'bg-[color:var(--surface-3)] text-foreground',
+  panel: 'bg-[color:var(--surface-2)] text-foreground',
+  dark: 'bg-[color:var(--surface-dark)] text-white',
 }
 
 export const containerClass =
@@ -71,7 +71,7 @@ export function Eyebrow({
     <p
       className={cn(
         'flex items-center gap-3 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.2em]',
-        onDark ? 'text-[color:var(--color-azure)]' : 'text-[color:var(--color-blue)]',
+        onDark ? 'text-[color:var(--color-azure)]' : 'text-[color:var(--blue-ink)]',
         className,
       )}
     >

@@ -45,7 +45,7 @@ export default async function CaseStudyPage({
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main id="main">
-        <section className="bg-[#f5f7f7] pb-10 pt-28 md:pb-12 md:pt-36">
+        <section className="bg-[color:var(--surface-2)] pb-10 pt-28 md:pb-12 md:pt-36">
           <Container>
             <Reveal>
               <Link
@@ -83,7 +83,7 @@ export default async function CaseStudyPage({
           </Container>
         </section>
 
-        <section className="bg-[#f5f7f7]">
+        <section className="bg-[color:var(--surface-2)]">
           <Container className="pb-12 md:pb-16">
             <Reveal variant="image">
               <div className="relative">
@@ -181,7 +181,7 @@ export default async function CaseStudyPage({
           </Container>
         </section>
 
-        <section className="border-t border-border bg-[#f5f7f7] py-12 md:py-14">
+        <section className="border-t border-border bg-[color:var(--surface-2)] py-12 md:py-14">
           <Container>
             <Reveal className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
               <div>

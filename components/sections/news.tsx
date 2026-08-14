@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
 import { Section } from '@/components/section'
 import { Reveal } from '@/components/reveal'
 import { NewsletterForm } from '@/components/newsletter-form'
+import { NewsCarousel } from '@/components/news-carousel'
 import { newsPosts, type NewsPost } from '@/lib/news'
 
 /**
@@ -31,14 +31,18 @@ const newsImageClasses = [
 ] as const
 
 /**
- * How many stories the homepage teases. `newsPosts` arrives sorted newest-first,
- * so this is simply the latest one; everything else lives on /news.
+ * How many stories the homepage carousel cycles through. `newsPosts` arrives
+ * sorted newest-first. `null` means "all of them"; set a number to cap the
+ * rotation and send the remainder to /news.
  */
-const HOMEPAGE_POST_COUNT = 1
+const HOMEPAGE_POST_COUNT: number | null = null
 
 export function News() {
   const publishedCount = newsPosts.length
-  const featuredPosts = newsPosts.slice(0, HOMEPAGE_POST_COUNT)
+  const featuredPosts =
+    HOMEPAGE_POST_COUNT === null
+      ? newsPosts
+      : newsPosts.slice(0, HOMEPAGE_POST_COUNT)
 
   return (
     <Section id="news" className="news-minimal">
@@ -77,29 +81,7 @@ export function News() {
                 <span>Articles and Updates</span>
                 <Link href="/news">View all</Link>
               </div>
-              <div className="news-minimal__list">
-                {featuredPosts.map((post) => (
-                  <Link
-                    key={post.slug}
-                    href={`/news/${post.slug}`}
-                    className="news-minimal__item"
-                    aria-label={`Read full news story: ${post.title}`}
-                  >
-                    <div>
-                      <div className="news-minimal__item-meta">
-                        <span>{String(post.order).padStart(2, '0')}</span>
-                        <span>{post.category}</span>
-                        <time dateTime={post.date}>{post.displayDate}</time>
-                      </div>
-                      <h3>{post.title}</h3>
-                      <span className="mt-5 inline-flex items-center gap-2 font-['Poppins'] text-[0.56rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-azure)]">
-                        Read full story
-                      </span>
-                    </div>
-                    <ArrowUpRight aria-hidden="true" />
-                  </Link>
-                ))}
-              </div>
+              <NewsCarousel posts={featuredPosts} />
               <NewsFilm posts={newsPosts} />
             </div>
           )}

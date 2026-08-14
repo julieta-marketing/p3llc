@@ -58,8 +58,8 @@ export function PartnershipValueBar() {
       eyebrow="Why public-private partnerships?"
       title="Move complex civic projects forward."
       body="Expand funding, accelerate delivery, and bring private expertise to public goals."
-      image="/why/why-public-private-v2.png"
-      imageAlt="Architectural model of a planned waterfront city district"
+      image="/why/why-public-private-v3.png"
+      imageAlt="Contemporary public civic building in warm late-afternoon light"
       tone="blue"
     />
   )

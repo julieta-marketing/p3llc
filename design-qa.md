@@ -442,3 +442,72 @@ No actionable P0, P1, or P2 issues remain for the requested enlargement and non-
 No remaining P3 items identified for this request. Mobile styling is implemented through the existing one-column breakpoint; the target comparison for this pass is the supplied desktop state.
 
 final result: passed
+
+---
+
+# Global Surface System — Unified Background Ladder — 2026-08-14
+
+## Target and evidence
+
+- User direction: every section background felt unpolished; asked for a global
+  pass so scrolling reads smoother, more professional, more mature.
+- Chosen options: unify the ladder while keeping the existing section rhythm;
+  cool blue-grey temperature; fold the contact page into the same dark.
+- Audit method: every `#rrggbb` in `app/` and `components/` parsed to CIELAB
+  L*, HSL hue and saturation, grouped by role.
+
+## What the audit found
+
+- 42 distinct light surface values and 21 distinct darks across the site.
+- Most were separated by less than 0.5 L* — `#f5f7f7` vs `#f4f7f7` is 0.1 L*,
+  `#fbfcfc` vs `#ffffff` is 1.1 L*. Too close to read as a deliberate step,
+  close enough to read as inconsistency.
+- Hues ranged 100°–210°. The News band `#f3f5f2` sat at hue 100° (green) inside
+  an otherwise cyan-grey page. The delivery-suite mid stop `#dfecef` carried
+  33% saturation, noticeably heavier than its neighbours.
+- The contact page ran L* 2.5–5.5 against a site whose darks sat at L* 8–11, so
+  it read as a different product.
+
+## Change
+
+- One ladder in `:root`: `--surface-0..4` (L* 100 / 98.6 / 95.7 / 92.8 / 89.8,
+  hue ~205°) and `--surface-dark{,-deep,-lift,-plate}` (L* 8.7 / 6.3 / 11.9 /
+  16.0, hue ~199°), plus `--navy-lift`, `--hairline`, `--blue-ink`.
+- Every section, card, plate and gradient stop remapped onto a rung. Section
+  order and page structure unchanged.
+- Seams: dark bands lift one rung at a light boundary and settle over 9–14rem
+  (`.hero-band`, `.case-feature-section`, `.site-footer`, `.contact-open`).
+- Delivery-suite column rule dropped 8% → 3%, pitch 6rem → 8rem.
+- Two inline Tailwind gradients moved to named classes (`.media-scrim`,
+  `.contact-open`) so no arbitrary-value edge cases are in play.
+
+## Required fidelity surfaces
+
+- Colors and visual tokens: 63 one-off values → 9 tokens defined in one place.
+  Passed.
+- Contrast: recomputed for every text/surface pair. Body 12.1–14.6, headings
+  11.0–13.1. `--muted-foreground` deepened `#5a7079` → `#576b75` (4.34 → 4.65
+  on the darkest light rung). Eyebrows moved to `--blue-ink #0a6a8a` (3.86 →
+  5.08); brand `--color-blue` unchanged for rules, dots and graphics. Passed.
+- Copy and content: unchanged. Passed.
+- Layout and spacing rhythm: untouched. Passed.
+- Type check: `tsc --noEmit` clean apart from the pre-existing
+  `our-approach.tsx` `tabIndex` error. Passed.
+
+## Findings
+
+No P0/P1 identified. One P2 left open: the transactional email template in
+`app/api/contact/route.ts` still carries six one-off surface hexes. Left alone
+deliberately — it renders in mail clients, not the site, and CSS variables do
+not survive there.
+
+## Not verified
+
+Live browser QA was not possible in this session: the sandbox is linux/arm64
+while `node_modules` is darwin-arm64, so `next dev` cannot load SWC, and
+neither sandbox nor cloud container has npm egress to install the right binary.
+Verification was static — colour maths, contrast maths, brace/variable
+validation, type check, and a rendered before/after band comparison. Needs a
+`pnpm dev` pass on the Mac to confirm in situ.
+
+final result: passed, pending live browser QA

@@ -10,7 +10,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-white/10 bg-[#041f30] text-white">
+    <footer className="site-footer border-t border-white/10 bg-[color:var(--surface-dark-deep)] text-white">
       <Container className="py-10 md:py-14">
         <div className="grid grid-cols-1 gap-10 border-b border-white/15 pb-10 lg:grid-cols-12 lg:gap-10 lg:pb-12">
           <div className="lg:col-span-5">

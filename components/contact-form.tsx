@@ -220,7 +220,7 @@ export function ContactForm() {
           size="lg"
           disabled={status === 'submitting'}
           arrow={status !== 'submitting'}
-          className="w-full border-[#67cce5] bg-[#67cce5] text-[#061319] shadow-[0_12px_34px_rgba(68,190,219,0.16)] hover:border-white hover:bg-white sm:w-auto sm:min-w-44"
+          className="w-full border-[#67cce5] bg-[#67cce5] text-[color:var(--surface-dark)] shadow-[0_12px_34px_rgba(68,190,219,0.16)] hover:border-white hover:bg-white sm:w-auto sm:min-w-44"
         >
           {status === 'submitting' ? (
             <>

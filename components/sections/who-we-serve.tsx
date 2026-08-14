@@ -11,22 +11,17 @@ export function WhoWeServe() {
       id="who-we-serve"
       className="network-workspace-section overflow-hidden !bg-transparent !pt-16 !pb-0 text-[color:var(--color-dark-azure)] md:!pt-20 lg:!pt-24"
     >
-      <Reveal className="relative z-10">
-        <h2 className="mt-5 max-w-[18ch] text-balance font-sans text-[2.35rem] font-medium leading-[1.04] tracking-normal text-[color:var(--color-dark-azure)] sm:text-[3.2rem] lg:max-w-[20ch] lg:text-[4.45rem] lg:leading-[0.98]">
+      <Reveal className="delivery-suite-intro relative z-10">
+        <h2 className="delivery-suite-intro__long-title">
           Trusted by Public &amp; Private Leaders
         </h2>
-        <p className="mt-5 max-w-[44rem] text-base leading-7 text-[color:var(--muted-foreground)] md:text-lg md:leading-8">
+        <p>
           P3 starts with the public owner’s mandate, then aligns delivery partners,
           capital, and technical expertise around a structure that can move.
         </p>
       </Reveal>
 
-      <Reveal delay={140} className="mt-7 lg:mt-8">
-        <div className="public-suite__kicker public-suite__kicker--between">
-          <span>01</span>
-          <span>Our Network</span>
-        </div>
-
+      <Reveal delay={140} className="mt-10 lg:mt-12">
         <div className="network-workspace public-ecosystem">
           <div className="public-ecosystem__connector" aria-hidden="true" />
 

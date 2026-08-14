@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 
 export function Hero() {
   return (
-    <section className="relative isolate overflow-hidden bg-[color:var(--color-dark-azure)] text-white lg:h-[clamp(38rem,75svh,54rem)]">
+    <section className="hero-band relative isolate overflow-hidden text-white lg:h-[clamp(38rem,75svh,54rem)]">
       <div
         className="executive-grid pointer-events-none absolute inset-y-0 left-0 w-full opacity-30 lg:w-[52%]"
         aria-hidden="true"

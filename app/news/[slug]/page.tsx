@@ -46,7 +46,7 @@ export default async function NewsDetailPage({
       <SiteHeader />
       <main id="main">
         <article>
-          <header className="bg-[#f5f7f7] pb-12 pt-32 md:pb-16 md:pt-40">
+          <header className="bg-[color:var(--surface-2)] pb-12 pt-32 md:pb-16 md:pt-40">
             <Container>
               <Reveal>
                 <div className="flex flex-wrap gap-x-6 gap-y-3">
@@ -92,7 +92,7 @@ export default async function NewsDetailPage({
             </Container>
           </header>
 
-          <section className="bg-[#f5f7f7]">
+          <section className="bg-[color:var(--surface-2)]">
             <Container className="pb-16 md:pb-24">
               <Reveal variant="image">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-[color:var(--color-navy)] sm:aspect-[16/9] lg:aspect-[2/1]">
@@ -126,7 +126,7 @@ export default async function NewsDetailPage({
             </Container>
           </section>
 
-          <section className="bg-white py-16 md:py-20 lg:py-24">
+          <section className="bg-[color:var(--surface-1)] py-16 md:py-20 lg:py-24">
             <Container>
               <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
                 <Reveal as="aside" className="lg:col-span-3">
@@ -143,10 +143,17 @@ export default async function NewsDetailPage({
                 <Reveal className="lg:col-span-7 lg:col-start-5">
                   <div className="space-y-7">
                     {post.content.map((block, index) =>
-                      block.type === 'quote' ? (
+                      block.type === 'heading' ? (
+                        <h2
+                          key={`${block.type}-${index}`}
+                          className="pt-6 font-sans text-2xl font-medium tracking-[-0.03em] text-[color:var(--color-dark-azure)] md:text-3xl"
+                        >
+                          {block.text}
+                        </h2>
+                      ) : block.type === 'quote' ? (
                         <blockquote
                           key={`${block.type}-${index}`}
-                          className="my-10 border-l-2 border-[color:var(--color-azure)] bg-[#f3f6f6] px-6 py-7 md:px-8 md:py-9"
+                          className="my-10 border-l-2 border-[color:var(--color-azure)] bg-[color:var(--surface-2)] px-6 py-7 md:px-8 md:py-9"
                         >
                           <p className="font-serif text-2xl leading-snug tracking-[-0.02em] text-[color:var(--color-dark-azure)] md:text-3xl">
                             “{block.text}”
@@ -171,7 +178,7 @@ export default async function NewsDetailPage({
           </section>
         </article>
 
-        <section className="border-t border-border bg-[#f5f7f7] py-16 md:py-20">
+        <section className="border-t border-border bg-[color:var(--surface-2)] py-16 md:py-20">
           <Container>
             <Reveal className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
               <div>

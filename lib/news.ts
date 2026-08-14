@@ -3,6 +3,10 @@ import path from 'node:path'
 
 export type NewsContentBlock =
   | {
+      type: 'heading'
+      text: string
+    }
+  | {
       type: 'paragraph'
       text: string
     }
@@ -130,6 +134,15 @@ function parseArticleContent(body: string, fileName: string): NewsContentBlock[]
     .filter(Boolean)
     .map((block) => {
       const lines = block.split('\n').map((line) => line.trim())
+
+      // A single line beginning with "## " (or "### ") becomes a section heading.
+      if (lines.length === 1 && /^#{2,3}\s+/.test(lines[0])) {
+        return {
+          type: 'heading' as const,
+          text: lines[0].replace(/^#{2,3}\s+/, '').trim(),
+        }
+      }
+
       const isQuote = lines.every((line) => line.startsWith('>'))
 
       if (!isQuote) {

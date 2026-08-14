@@ -55,6 +55,13 @@ export function Reveal({
       return
     }
 
+    // An element taller than the viewport can never expose 15% of itself at
+    // once, so a fixed 0.15 threshold would never fire and the content would
+    // stay at opacity 0 forever. Fall back to 0 when 0.15 is unreachable.
+    const reachableRatio =
+      node.offsetHeight > 0 ? window.innerHeight / node.offsetHeight : 1
+    const threshold = reachableRatio < 0.2 ? 0 : 0.15
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -64,7 +71,7 @@ export function Reveal({
           }
         })
       },
-      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' },
+      { threshold, rootMargin: '0px 0px -60px 0px' },
     )
 
     observer.observe(node)

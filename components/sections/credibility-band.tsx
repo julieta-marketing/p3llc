@@ -37,10 +37,10 @@ export function CredibilityBand() {
     <section
       id="experience"
       aria-labelledby="track-record-title"
-      className="relative z-20 bg-[color:var(--color-lgb-soft)] pb-20 md:pb-24 lg:pb-28"
+      className="relative z-20 bg-[color:var(--surface-2)] pb-20 md:pb-24 lg:pb-28"
     >
       <div className={cn(containerClass, 'relative')}>
-        <div className="-mt-7 border-x border-b border-black/[0.07] border-t border-t-[color:var(--color-dark-azure)] bg-[#f7f9f9] px-4 py-7 shadow-[0_14px_40px_rgba(7,26,34,0.055)] sm:-mt-9 sm:px-6 sm:py-8 lg:-mt-10 lg:px-8 lg:py-9">
+        <div className="-mt-7 border-x border-b border-black/[0.07] border-t border-t-[color:var(--color-dark-azure)] bg-[color:var(--surface-1)] px-4 py-7 shadow-[0_14px_40px_rgba(7,26,34,0.055)] sm:-mt-9 sm:px-6 sm:py-8 lg:-mt-10 lg:px-8 lg:py-9">
           <Reveal className="grid grid-cols-1 gap-4 px-1 md:grid-cols-12 md:items-center md:gap-8">
             <p className="flex items-center gap-3 font-['Poppins'] text-[0.69rem] font-medium uppercase tracking-[0.18em] text-[color:var(--color-navy)] md:col-span-4">
               <span
