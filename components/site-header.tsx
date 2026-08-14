@@ -89,7 +89,7 @@ export function SiteHeader() {
       >
         <div
           className={cn(
-            'site-header__inner mx-auto grid h-[3.75rem] w-full max-w-[96rem] grid-cols-[1fr_auto] items-center px-5 sm:px-6 min-[1180px]:h-[4.25rem] min-[1180px]:grid-cols-[1fr_auto_1fr] min-[1180px]:px-8 2xl:h-[4.5rem]',
+            'site-header__inner mx-auto grid h-[3.75rem] w-full max-w-[96rem] grid-cols-[1fr_auto] items-center px-9 sm:px-12 md:px-16 min-[1180px]:h-[4.25rem] min-[1180px]:grid-cols-[1fr_auto_1fr] min-[1180px]:px-20 xl:px-24 2xl:h-[4.5rem] 2xl:px-28',
           )}
         >
           <Logo priority className="justify-self-start" />
@@ -147,7 +147,7 @@ export function SiteHeader() {
         >
           <nav
             aria-label="Mobile"
-            className="mx-auto flex min-h-full w-full flex-col px-5 py-6 sm:px-6"
+            className="mx-auto flex min-h-full w-full flex-col px-9 py-6 sm:px-12 md:px-16"
           >
             <div className="flex flex-col">
               {navItems.map((item, index) => (

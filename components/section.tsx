@@ -12,7 +12,7 @@ const toneClass: Record<Tone, string> = {
 }
 
 export const containerClass =
-  'mx-auto w-full max-w-[96rem] px-5 sm:px-7 md:px-10 lg:px-12'
+  'mx-auto w-full max-w-[96rem] px-9 sm:px-12 md:px-16 lg:px-20 xl:px-24 2xl:px-28'
 
 export function Container({
   children,

@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 import { CtaLink } from '@/components/cta-button'
 import { HeroProjectLink } from '@/components/hero-project-link'
 import { HeroMediaCarousel } from '@/components/hero-media-carousel'
@@ -25,16 +23,7 @@ export function Hero() {
         )}
       >
         <div className="max-w-[44rem] lg:col-span-5 lg:max-w-none lg:-translate-y-2 lg:pr-8 xl:pr-14 2xl:pr-5">
-          <Image
-            src="/p3-logo-white.png"
-            alt="P3 LLC — Public Private Partners"
-            width={520}
-            height={162}
-            priority
-            className="hero-kicker h-auto w-[6.5rem] sm:w-[7.75rem] 2xl:w-[8.75rem]"
-          />
-
-          <h1 className="mt-5 max-w-[10ch] font-sans text-[clamp(2.85rem,13.75vw,3.35rem)] font-medium leading-[0.9] tracking-[-0.06em] text-white sm:text-[clamp(2.9rem,6vw,4rem)] lg:text-[clamp(3.15rem,5vw,4rem)] xl:text-[clamp(4.25rem,4.25vw,5.1rem)]">
+          <h1 className="max-w-[10ch] font-sans text-[clamp(2.85rem,13.75vw,3.35rem)] font-medium leading-[0.9] tracking-[-0.06em] text-white sm:text-[clamp(2.9rem,6vw,4rem)] lg:text-[clamp(3.15rem,5vw,4rem)] xl:text-[clamp(4.25rem,4.25vw,5.1rem)]">
             <span className="hero-title-mask block">
               <span className="hero-title-line block">Helping</span>
             </span>
@@ -48,12 +37,12 @@ export function Hero() {
             </span>
           </h1>
 
-          <p className="hero-copy mt-5 max-w-[40ch] font-['Poppins'] text-base font-normal leading-7 text-white/70 xl:text-[1.1rem] xl:leading-8 2xl:text-[1.2rem] 2xl:leading-[2.1rem]">
-            P3 LLC helps public agencies and private-sector partners finance,
-            structure, and deliver infrastructure and economic development projects.
+          <p className="hero-copy mt-6 max-w-[36ch] font-['Poppins'] text-base font-normal leading-7 text-white/70 sm:mt-7 xl:text-[1.1rem] xl:leading-8 2xl:text-[1.2rem] 2xl:leading-[2.1rem]">
+            P3 LLC helps public and private partners finance, structure, and
+            deliver infrastructure and economic development projects.
           </p>
 
-          <div className="hero-actions mt-5 flex flex-wrap items-center gap-x-6 gap-y-5">
+          <div className="hero-actions mt-10 flex flex-wrap items-center gap-x-8 gap-y-5 sm:mt-12">
             <CtaLink href="/contact" variant="light" size="lg" arrow className="text-[0.8rem]">
               Contact Us
             </CtaLink>

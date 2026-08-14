@@ -1,78 +1,44 @@
-'use client'
-
-import { useEffect, useRef, type CSSProperties } from 'react'
-import { Section, Eyebrow } from '@/components/section'
+import { Section } from '@/components/section'
 import { Reveal } from '@/components/reveal'
 import { whoWeServe } from '@/lib/content'
+import type { CSSProperties } from 'react'
 
 export function WhoWeServe() {
   const [publicGroup, privateGroup] = whoWeServe
-  const workspaceRef = useRef<HTMLDivElement>(null)
-  const glowFieldRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const workspace = workspaceRef.current
-    const field = glowFieldRef.current
-    if (!workspace || !field) return
-
-    if (
-      window.matchMedia('(hover: none)').matches ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      return
-    }
-
-    function handlePointerMove(event: PointerEvent) {
-      const bounds = workspace!.getBoundingClientRect()
-      const x = ((event.clientX - bounds.left) / bounds.width) * 100
-      const y = ((event.clientY - bounds.top) / bounds.height) * 100
-      field!.style.setProperty('--mx', `${x}%`)
-      field!.style.setProperty('--my', `${y}%`)
-      field!.classList.add('is-active')
-    }
-
-    function handlePointerLeave() {
-      field!.classList.remove('is-active')
-    }
-
-    workspace.addEventListener('pointermove', handlePointerMove)
-    workspace.addEventListener('pointerleave', handlePointerLeave)
-
-    return () => {
-      workspace.removeEventListener('pointermove', handlePointerMove)
-      workspace.removeEventListener('pointerleave', handlePointerLeave)
-    }
-  }, [])
 
   return (
     <Section
       id="who-we-serve"
-      className="network-workspace-section overflow-hidden !bg-transparent !pt-14 !pb-0 text-white md:!pt-16 lg:!pt-20"
+      className="network-workspace-section overflow-hidden !bg-transparent !pt-16 !pb-0 text-[color:var(--color-dark-azure)] md:!pt-20 lg:!pt-24"
     >
       <Reveal className="relative z-10">
-        <Eyebrow onDark>Our Network</Eyebrow>
-        <h2 className="mt-5 max-w-[16ch] text-balance font-sans text-[clamp(2.1rem,8vw,3rem)] font-medium leading-[1.06] tracking-[-0.045em] text-white lg:max-w-none lg:whitespace-nowrap lg:text-[clamp(2.6rem,4.8vw,4.3rem)] lg:leading-[1.02] lg:tracking-[-0.05em]">
+        <h2 className="mt-5 max-w-[18ch] text-balance font-sans text-[2.35rem] font-medium leading-[1.04] tracking-normal text-[color:var(--color-dark-azure)] sm:text-[3.2rem] lg:max-w-[20ch] lg:text-[4.45rem] lg:leading-[0.98]">
           Trusted by Public &amp; Private Leaders
         </h2>
+        <p className="mt-5 max-w-[44rem] text-base leading-7 text-[color:var(--muted-foreground)] md:text-lg md:leading-8">
+          P3 starts with the public owner’s mandate, then aligns delivery partners,
+          capital, and technical expertise around a structure that can move.
+        </p>
       </Reveal>
 
       <Reveal delay={140} className="mt-7 lg:mt-8">
-        <div ref={workspaceRef} className="network-workspace">
-          <div ref={glowFieldRef} className="network-workspace__field network-glow" aria-hidden="true">
-            <div className="network-glow__ambient" />
-            <div className="network-glow__grid" />
-            <div className="network-glow__grid-wave" />
-            <div className="network-glow__grid-lit" />
-          </div>
+        <div className="public-suite__kicker public-suite__kicker--between">
+          <span>01</span>
+          <span>Our Network</span>
+        </div>
 
-          <div className="network-lists relative z-10 mx-auto w-full max-w-[82rem]">
-            <EcosystemList
-              type="public"
+        <div className="network-workspace public-ecosystem">
+          <div className="public-ecosystem__connector" aria-hidden="true" />
+
+          <div className="public-ecosystem__panel">
+            <EcosystemGroup
+              eyebrow="Public Ecosystem"
               heading={publicGroup.heading}
               items={publicGroup.items}
             />
-            <EcosystemList
-              type="private"
+
+            <EcosystemGroup
+              eyebrow="Private Ecosystem"
               heading={privateGroup.heading}
               items={privateGroup.items}
             />
@@ -83,26 +49,28 @@ export function WhoWeServe() {
   )
 }
 
-function EcosystemList({
-  type,
+function EcosystemGroup({
+  eyebrow,
   heading,
   items,
 }: {
-  type: 'public' | 'private'
+  eyebrow: string
   heading: string
   items: string[]
 }) {
   return (
-    <div className="network-list">
-      <div className="network-list__heading">
-        <span>{type} ecosystem</span>
+    <div className="public-ecosystem__group">
+      <div className="public-ecosystem__heading">
+        <span>{eyebrow}</span>
         <h3>{heading}</h3>
       </div>
 
       <ul
+        className="public-ecosystem__owners"
+        aria-label={heading}
         style={
           {
-            '--list-rows': String(Math.ceil(items.length / 2)),
+            '--ecosystem-rows': String(Math.ceil(items.length / 2)),
           } as CSSProperties
         }
       >

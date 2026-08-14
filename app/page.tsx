@@ -26,7 +26,7 @@ export default function HomePage() {
         <Services />
         <CaseStudies projects={caseStudies.slice(0, 4)} />
         <CaseContactCta />
-        <div className="bg-[linear-gradient(180deg,#041820_0%,#063847_38%,#063847_64%,#041820_100%)]">
+        <div className="public-delivery-suite">
           <WhoWeServe />
           <OurApproach />
         </div>
