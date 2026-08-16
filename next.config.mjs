@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Keep the shared-device preview fully hydrated when it is opened through
+  // the local network address rather than localhost.
+  allowedDevOrigins: ['127.0.0.1', '10.0.0.52'],
   typescript: {
     ignoreBuildErrors: true,
   },

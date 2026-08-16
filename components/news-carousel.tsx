@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 
@@ -13,6 +13,8 @@ const AUTOPLAY_MS = 5_000
 export function NewsCarousel({ posts }: { posts: NewsPost[] }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [hasReducedMotion, setHasReducedMotion] = useState(false)
+  const [isInView, setIsInView] = useState(false)
+  const carouselRef = useRef<HTMLDivElement>(null)
   /* Hover and keyboard focus pause the rotation so a story cannot slide out
      from under someone who is part-way through reading or tabbing it. */
   const [isEngaged, setIsEngaged] = useState(false)
@@ -26,8 +28,24 @@ export function NewsCarousel({ posts }: { posts: NewsPost[] }) {
     return () => mediaQuery.removeEventListener('change', updatePreference)
   }, [])
 
+  useEffect(() => {
+    const carousel = carouselRef.current
+    if (!carousel || typeof IntersectionObserver === 'undefined') {
+      setIsInView(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.2, rootMargin: '0px 0px -8% 0px' },
+    )
+
+    observer.observe(carousel)
+    return () => observer.disconnect()
+  }, [])
+
   const canRotate = posts.length > 1
-  const isPlaying = canRotate && !hasReducedMotion && !isEngaged
+  const isPlaying = canRotate && isInView && !hasReducedMotion && !isEngaged
 
   useEffect(() => {
     if (!isPlaying) return
@@ -45,6 +63,7 @@ export function NewsCarousel({ posts }: { posts: NewsPost[] }) {
 
   return (
     <div
+      ref={carouselRef}
       className="news-carousel"
       role="region"
       aria-roledescription="carousel"

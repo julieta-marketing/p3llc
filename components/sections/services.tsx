@@ -31,13 +31,8 @@ export function Services() {
         <div>
           <Eyebrow>Solutions</Eyebrow>
           <h2 className="mt-7 max-w-[17ch] font-sans text-[2.45rem] font-medium leading-[1.01] tracking-[-0.05em] text-[color:var(--color-dark-azure)] sm:text-[3.3rem] lg:max-w-none lg:text-[4.5rem]">
-            For public{' '}
-            <span className="brand-title-highlight">
-              infrastructure
-            </span>{' '}
-            <span className="lg:whitespace-nowrap">
-              and economic development projects.
-            </span>
+            Public <span className="brand-title-highlight">Infrastructure</span>{' '}
+            &amp; Economic Development Solutions
           </h2>
         </div>
       </Reveal>
@@ -53,7 +48,7 @@ export function Services() {
           return (
             <Reveal
               key={item.title}
-              delay={index * 90}
+              delay={index * 70}
               className="why-card-rail__item min-h-[14rem] sm:min-h-[23rem] lg:min-h-[27rem] xl:min-w-0 xl:flex-1"
             >
               <article

@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import type { ComponentProps } from 'react'
 
 const base =
-  'group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full border font-sans text-[0.72rem] font-semibold uppercase tracking-[0.15em] transition-[color,background-color,border-color] duration-300 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-3 disabled:pointer-events-none disabled:opacity-50'
+  'group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full border font-sans text-[0.76rem] font-semibold uppercase tracking-[0.13em] transition-[color,background-color,border-color] duration-300 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-3 disabled:pointer-events-none disabled:opacity-50'
 
 const sizes = {
   md: 'h-11 px-5',

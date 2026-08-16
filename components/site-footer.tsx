@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { contactEmail, navItems } from '@/lib/content'
 import { Container } from '@/components/section'
+import { CtaLink } from '@/components/cta-button'
 
 const footerContactEmail = contactEmail
 
@@ -36,7 +37,7 @@ export function SiteFooter() {
 
           <div className="grid gap-9 sm:grid-cols-2 lg:col-span-6 lg:col-start-7 lg:gap-0">
             <nav aria-label="Footer" className="sm:pr-8 lg:pr-12">
-              <h2 className="font-sans text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-azure)]">
+              <h2 className="font-sans text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-azure)]">
                 Navigate
               </h2>
               <ul className="mt-6 grid grid-cols-2 gap-x-8 gap-y-3">
@@ -58,19 +59,11 @@ export function SiteFooter() {
                     FAQ
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href="/contact"
-                    className="inline-flex min-h-11 items-center py-2 text-sm text-white/70 outline-none transition-colors hover:text-white focus-visible:text-white focus-visible:underline sm:min-h-0 sm:py-0.5"
-                  >
-                    Contact
-                  </Link>
-                </li>
               </ul>
             </nav>
 
             <div className="border-t border-white/15 pt-8 sm:border-t-0 sm:pl-8 sm:pt-0 lg:pl-12">
-              <h2 className="font-sans text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-azure)]">
+              <h2 className="font-sans text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-azure)]">
                 Contact
               </h2>
               <a
@@ -83,11 +76,20 @@ export function SiteFooter() {
                   aria-hidden="true"
                 />
               </a>
+              <CtaLink
+                href="/contact"
+                variant="outlineInverse"
+                size="md"
+                arrow
+                className="mt-6 flex w-fit"
+              >
+                Contact Us
+              </CtaLink>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col gap-5 pt-6 text-[0.68rem] uppercase tracking-[0.12em] text-white/62 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-5 pt-6 text-[0.75rem] uppercase tracking-[0.1em] text-white/62 sm:flex-row sm:items-center sm:justify-between">
           <p>Copyright &copy; {year} P3 LLC - All Rights Reserved.</p>
           <Link
             href="/privacy"

@@ -10,9 +10,9 @@ import { contactInfo } from '@/lib/content'
 import { ContactRippleField } from '@/components/contact-ripple-field'
 
 export const metadata: Metadata = {
-  title: "Let's Discuss Your Project — P3 LLC",
+  title: 'Discuss Your Project — P3 LLC',
   description:
-    'Tell us about your project, funding needs, delivery challenges, or partnership opportunities. Our team will follow up to discuss possible next steps.',
+    'Share your project goals, constraints, and timeline with the P3 LLC team.',
 }
 
 export default function ContactPage() {
@@ -28,61 +28,53 @@ export default function ContactPage() {
           <div className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(180deg,rgba(6,20,26,0.28),rgba(6,20,26,0.08)_40%,rgba(6,20,26,0.48))]" aria-hidden="true" />
           <Container className="relative z-10">
             <Reveal>
-              <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-black/25 px-4 py-2 backdrop-blur-md">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#67cce5] shadow-[0_0_12px_#67cce5]" />
-                <span className="text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-white/56">P3 / Contact</span>
-              </div>
-              <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end">
-                <h1 className="max-w-[11ch] font-serif text-[3.25rem] leading-[0.96] tracking-[-0.045em] text-white sm:text-6xl lg:col-span-8 lg:text-[5.65rem]">
-                  Move complex projects forward.
+              <Eyebrow onDark>Contact P3 LLC</Eyebrow>
+              <div className="mt-8">
+                <h1 className="max-w-[13ch] font-sans text-[3.15rem] font-medium leading-[0.98] tracking-[-0.05em] text-white sm:text-[4rem] lg:text-[4.9rem]">
+                  Discuss Your Project
                 </h1>
-                <p className="max-w-[46ch] text-base leading-7 text-white/52 md:text-lg md:leading-8 lg:col-span-4">
-                  Tell us about your project, funding needs, delivery challenges,
-                  or partnership opportunities. Our team will follow up to
-                  discuss possible next steps.
+                <p className="mt-7 max-w-[80ch] text-[1.02rem] leading-7 text-white/68 md:text-[1.08rem] md:leading-8">
+                  Share your goals, constraints, and timeline. We’ll help identify
+                  practical next steps.
                 </p>
               </div>
             </Reveal>
 
-            <div className="mt-16 grid grid-cols-1 overflow-hidden rounded-[1.4rem] border border-white/12 bg-[color:var(--surface-dark-deep)]/82 shadow-[0_36px_100px_rgba(0,0,0,0.42)] backdrop-blur-xl lg:mt-24 lg:grid-cols-12">
-              <aside className="relative border-b border-white/10 p-7 sm:p-9 lg:col-span-4 lg:border-b-0 lg:border-r lg:p-11">
+            <div className="mt-16 grid grid-cols-1 gap-4 lg:mt-20 lg:grid-cols-12">
+              <aside className="relative rounded-[1.4rem] bg-white/[0.055] p-7 shadow-[0_30px_80px_rgba(0,0,0,0.25)] ring-1 ring-white/8 backdrop-blur-xl sm:p-9 lg:col-span-4 lg:p-10">
                 <Reveal>
-                  <p className="text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-[#67cce5]">Project brief / 01</p>
-                  <h2 className="mt-8 max-w-[10ch] font-serif text-3xl leading-[1.05] tracking-[-0.03em] !text-white sm:text-4xl">Start with a conversation.</h2>
-                  <p className="mt-6 max-w-[34ch] text-sm leading-6 text-white/58">
-                    Whether you are exploring an idea or advancing an active
-                    project, we are glad to help you identify potential next
-                    steps and resources.
+                  <Eyebrow onDark>Direct Contact</Eyebrow>
+                  <h2 className="mt-7 max-w-[11ch] font-sans text-[2rem] font-medium leading-[1.04] tracking-[-0.04em] !text-white sm:text-[2.45rem]">
+                    Email Our Team
+                  </h2>
+                  <p className="mt-6 max-w-[36ch] text-[0.98rem] leading-7 text-white/68">
+                    For project and partnership inquiries, contact us directly.
                   </p>
-                  <div className="mt-12 border-t border-white/10 pt-6">
-                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white/62">Direct contact</p>
-                    <ul className="mt-5 flex flex-col gap-4">
-                      {contactInfo.emails.map((email) => (
-                        <li key={email}>
-                          <a
-                            href={`mailto:${email}`}
-                            className="group inline-flex items-center gap-2 break-all text-sm text-white/66 outline-none transition-colors hover:text-[#67cce5] focus-visible:text-[#67cce5]"
-                          >
-                            <Mail className="h-3.5 w-3.5 shrink-0 text-[#67cce5]" aria-hidden="true" />
-                            {email}
-                            <ArrowUpRight
-                              className="h-3.5 w-3.5 shrink-0 opacity-0 transition-[opacity,transform] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
-                              aria-hidden="true"
-                            />
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-14 flex items-center gap-3 text-[0.68rem] uppercase tracking-[0.18em] text-white/62">
-                    <span className="h-px w-10 bg-[#67cce5]/50" /> Confidential inquiry
-                  </div>
+                  <ul className="mt-10 flex flex-col gap-3">
+                    {contactInfo.emails.map((email) => (
+                      <li key={email}>
+                        <a
+                          href={`mailto:${email}`}
+                          className="group flex min-h-14 items-center gap-3 rounded-xl bg-white/[0.065] px-4 py-3 text-[0.95rem] text-white/78 outline-none ring-1 ring-white/8 transition-[background-color,color] hover:bg-white/[0.1] hover:text-white focus-visible:ring-2 focus-visible:ring-[#67cce5]"
+                        >
+                          <Mail className="h-4 w-4 shrink-0 text-[#67cce5]" aria-hidden="true" />
+                          <span className="min-w-0 break-all">{email}</span>
+                          <ArrowUpRight
+                            className="ml-auto h-4 w-4 shrink-0 text-[#67cce5] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </Reveal>
               </aside>
-              <Reveal className="p-7 sm:p-9 lg:col-span-8 lg:p-11 xl:p-14">
-                <div className="mb-9 flex items-center justify-between border-b border-white/10 pb-5">
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.19em] text-white/62">Tell us what you are working on</p>
-                  <span className="text-[0.68rem] tabular-nums tracking-[0.15em] text-white/62">02 / 02</span>
+              <Reveal className="rounded-[1.4rem] bg-[color:var(--surface-dark-deep)]/74 p-7 shadow-[0_30px_80px_rgba(0,0,0,0.25)] ring-1 ring-white/8 backdrop-blur-xl sm:p-9 lg:col-span-8 lg:p-11 xl:p-14">
+                <div className="mb-9">
+                  <Eyebrow onDark>Project Details</Eyebrow>
+                  <h2 className="mt-5 font-sans text-[1.75rem] font-medium tracking-[-0.035em] text-white sm:text-[2.1rem]">
+                    Tell Us About Your Project
+                  </h2>
                 </div>
                 <ContactForm />
               </Reveal>
@@ -92,18 +84,18 @@ export default function ContactPage() {
 
         <section
           id="faq"
-          className="scroll-mt-24 border-t border-white/8 bg-[color:var(--surface-dark-deep)] py-20 text-white md:py-28 lg:py-32"
+          className="scroll-mt-24 bg-[color:var(--surface-2)] py-20 text-[color:var(--color-dark-azure)] md:py-28 lg:py-32"
         >
           <Container>
-            <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
-              <Reveal className="lg:col-span-3">
-                <Eyebrow onDark>FAQ</Eyebrow>
-                <h2 className="mt-7 max-w-[12ch] font-serif text-4xl leading-[1.05] tracking-[-0.025em] text-white md:text-5xl">
+            <div>
+              <Reveal>
+                <Eyebrow>FAQ</Eyebrow>
+                <h2 className="mt-7 font-sans text-[2.6rem] font-medium leading-[1.03] tracking-[-0.045em] text-[color:var(--color-dark-azure)] md:text-[3.5rem]">
                   Frequently Asked Questions
                 </h2>
               </Reveal>
-              <Reveal className="lg:col-span-8 lg:col-start-5">
-                <Faq tone="dark" />
+              <Reveal className="mt-12 md:mt-14">
+                <Faq />
               </Reveal>
             </div>
           </Container>

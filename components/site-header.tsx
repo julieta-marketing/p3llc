@@ -9,14 +9,6 @@ import { Logo } from '@/components/logo'
 import { navItems } from '@/lib/content'
 import { cn } from '@/lib/utils'
 
-const desktopNavItems = [
-  'About',
-  'Leadership',
-  'Solutions',
-  'Case Studies',
-  'Our Approach',
-].map((label) => navItems.find((item) => item.label === label)!)
-
 export function SiteHeader() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
@@ -98,7 +90,7 @@ export function SiteHeader() {
             aria-label="Primary"
             className="site-header__nav hidden items-center min-[1180px]:flex"
           >
-            {desktopNavItems.map((item) => (
+            {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

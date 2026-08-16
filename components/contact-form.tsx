@@ -9,7 +9,7 @@ type Errors = Record<string, string>
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
 const fieldBase =
-  'min-h-13 w-full rounded-lg border border-white/12 bg-white/[0.035] px-4 py-3 text-sm text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.025)] outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-white/50 hover:border-white/22 hover:bg-white/[0.05] focus-visible:border-[#67cce5]/70 focus-visible:bg-white/[0.065] focus-visible:ring-4 focus-visible:ring-[#67cce5]/10 aria-[invalid=true]:border-[#ff9b96] aria-[invalid=true]:ring-[#ff9b96]/25'
+  'min-h-14 w-full rounded-xl border border-white/14 bg-white/[0.055] px-4 py-3 text-base text-white outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-white/48 hover:border-white/24 hover:bg-white/[0.07] focus-visible:border-[#67cce5]/75 focus-visible:bg-white/[0.075] focus-visible:ring-4 focus-visible:ring-[#67cce5]/10 aria-[invalid=true]:border-[#ff9b96] aria-[invalid=true]:ring-[#ff9b96]/25'
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
@@ -87,7 +87,7 @@ export function ContactForm() {
         <CheckCircle2 className="h-8 w-8 text-accent" aria-hidden="true" />
         <div>
           <h3 className="text-xl font-semibold text-white">
-            Thank you — your message has been received.
+            Message Received
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-white/52">
             A member of the P3 LLC team will follow up to discuss possible next
@@ -250,7 +250,7 @@ function Field({ label, name, error, required, optional, children }: FieldProps)
     <div className="flex flex-col gap-2">
       <label
         htmlFor={name}
-        className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/70"
+        className="text-[0.78rem] font-semibold uppercase tracking-[0.13em] text-white/76"
       >
         {label}
         {required && (
@@ -262,14 +262,14 @@ function Field({ label, name, error, required, optional, children }: FieldProps)
           </>
         )}
         {optional && (
-          <span className="ml-1 text-[0.6rem] font-normal normal-case tracking-normal text-white/55">
+          <span className="ml-1 text-[0.72rem] font-normal normal-case tracking-normal text-white/58">
             (optional)
           </span>
         )}
       </label>
       {children}
       {error && (
-        <p id={`${name}-error`} className="text-xs text-[#ff9b96]">
+        <p id={`${name}-error`} className="text-[0.85rem] text-[#ff9b96]">
           {error}
         </p>
       )}

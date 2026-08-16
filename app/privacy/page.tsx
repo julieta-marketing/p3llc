@@ -241,7 +241,7 @@ export default function PrivacyPolicyPage() {
               <h1>Privacy Policy</h1>
               <Link
                 href="/"
-                className="group mt-8 inline-flex min-h-12 w-fit items-center gap-3 rounded-full border border-white/30 px-5 font-['Poppins'] text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-white outline-none transition-colors hover:border-[color:var(--color-azure)] hover:bg-[color:var(--color-azure)] hover:text-[color:var(--color-dark-azure)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-azure)]"
+                className="group mt-8 inline-flex min-h-12 w-fit items-center gap-3 rounded-full border border-white/30 px-5 font-['Poppins'] text-[0.76rem] font-semibold uppercase tracking-[0.13em] text-white outline-none transition-colors hover:border-[color:var(--color-azure)] hover:bg-[color:var(--color-azure)] hover:text-[color:var(--color-dark-azure)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-azure)]"
               >
                 <ArrowLeft
                   aria-hidden="true"
@@ -256,7 +256,7 @@ export default function PrivacyPolicyPage() {
         <section className="bg-[color:var(--surface-1)] py-20 md:py-28">
           <Container>
             <Reveal className="max-w-[68ch]">
-              <p className="font-['Poppins'] text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--blue-ink)]">
+              <p className="font-['Poppins'] text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--blue-ink)]">
                 Effective {EFFECTIVE_DATE}
               </p>
               <p className="mt-6 font-sans text-xl font-medium leading-snug tracking-[-0.025em] text-[color:var(--color-dark-azure)] sm:text-2xl">
@@ -278,7 +278,7 @@ export default function PrivacyPolicyPage() {
                           stray mark. */}
                       <span
                         aria-hidden="true"
-                        className="block font-['Poppins'] text-[0.62rem] font-semibold uppercase tabular-nums tracking-[0.2em] text-[color:var(--blue-ink)]"
+                        className="block font-['Poppins'] text-[0.78rem] font-semibold uppercase tabular-nums tracking-[0.16em] text-[color:var(--blue-ink)]"
                       >
                         {section.number}
                       </span>

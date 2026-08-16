@@ -18,9 +18,9 @@ export const navItems: NavItem[] = [
   { label: 'About', href: '/#about' },
   { label: 'Leadership', href: '/#leadership' },
   { label: 'Solutions', href: '/#services' },
-  { label: 'Case Studies', href: '/#case-studies' },
-  { label: 'Our Network', href: '/#who-we-serve' },
-  { label: 'Our Approach', href: '/#how-we-work' },
+  { label: 'Projects', href: '/#case-studies' },
+  { label: 'Network', href: '/#who-we-serve' },
+  { label: 'Approach', href: '/#how-we-work' },
   { label: 'News', href: '/#news' },
 ]
 
@@ -71,7 +71,7 @@ export const partners: Partner[] = [
   {
     name: 'Fullerton Consulting Partners',
     description:
-      'Infrastructure Development and procurement advisory firm with a specialty of creating cost-neutral, sustainable public projects by leveraging private sector resources.',
+      'Infrastructure development and procurement advisory firm specializing in sustainable public projects that leverage private-sector resources.',
   },
 ]
 
@@ -253,6 +253,7 @@ export type TeamMember = {
   portraitZoom?: number
   portraitOffsetX?: string
   portraitOffsetY?: string
+  portraitPosition?: string
   /** Decorative case-study photo that fills the inner half of the leadership panel. */
   caseImage: string
   /** Alt text / caption for the case-study photo. */
@@ -265,7 +266,7 @@ export type TeamMember = {
 export const team: TeamMember[] = [
   {
     name: 'Jeff Fullerton',
-    role: 'CEO & Managing Member, P3 LLC',
+    role: 'Chief Executive Officer',
     expertise: [
       '20+ Years of Infrastructure Development and P3 Expertise',
       '$6B+ in Project Experience',
@@ -275,33 +276,33 @@ export const team: TeamMember[] = [
       { value: '$6B+', label: 'Project experience' },
     ],
     image: '/leadership-jeff-fullerton-2026.jpg',
+    portraitPosition: '50% 0%',
     caseImage: '/case-studies/long-beach-civic-center-approved.webp',
     caseImageAlt: 'Long Beach Civic Center',
     linkedin: 'https://www.linkedin.com/in/jeffreyfullerton/',
     email: 'projects@P3LLC.net',
     bio:
-      'Jeff Fullerton is a real estate development, infrastructure, finance, and public-private partnership professional with more than 20 years of experience delivering technically complex public and private projects. His work spans development, procurement, financing, project structuring, and multiple alternative-delivery models.',
+      'Jeff Fullerton brings more than 20 years of experience across real estate development, infrastructure, finance, and public-private partnerships. He has led complex public and private projects through development, procurement, financing, structuring, and alternative delivery.',
   },
   {
     name: 'John Keisler',
-    role: 'CFO & Managing Member, P3 LLC',
+    role: 'Chief Financial Officer',
     expertise: ['20+ Years of Government Experience'],
     achievements: [
       { value: '20+', label: 'Years of government experience' },
       { value: 'Public + Private', label: 'Partnership leadership' },
     ],
     image: '/leadership-john-keisler.jpg',
-    // Source is a half-body portrait: the head is 27% of the frame versus 56%
-    // in Jeff's headshot, so it needs a 1.6x crop to match face size.
-    portraitZoom: 1.6,
-    portraitOffsetX: '-2.8%',
-    portraitOffsetY: '12.2%',
+    portraitPosition: '50% 0%',
+    portraitZoom: 1.18,
+    portraitOffsetX: '-3%',
+    portraitOffsetY: '-1.5%',
     caseImage: '/case-studies/queen-mary-approved.png',
     caseImageAlt: 'Queen Mary',
     linkedin: 'https://www.linkedin.com/in/jpkeisler/',
     email: 'john.keisler@sunstonecities.com',
     bio:
-      'John P. Keisler is an economic development leader with more than two decades of public-sector experience. His work spans public-private partnerships, strategic investment, innovation districts, workforce development, and major civic and economic-development initiatives.',
+      'John P. Keisler brings more than two decades of public-sector economic development leadership. His work spans public-private partnerships, strategic investment, innovation districts, workforce development, and major civic initiatives.',
   },
 ]
 

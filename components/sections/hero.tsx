@@ -23,7 +23,9 @@ export function Hero() {
         )}
       >
         <div className="max-w-[44rem] lg:col-span-5 lg:max-w-none lg:-translate-y-2 lg:pr-8 xl:pr-14 2xl:pr-5">
-          <h1 className="max-w-[10ch] font-sans text-[clamp(2.85rem,13.75vw,3.35rem)] font-medium leading-[0.9] tracking-[-0.06em] text-white sm:text-[clamp(2.9rem,6vw,4rem)] lg:text-[clamp(3.15rem,5vw,4rem)] xl:text-[clamp(4.25rem,4.25vw,5.1rem)]">
+          <p className="hero-kicker">Public Project Delivery</p>
+
+          <h1 className="hero-headline mt-5 max-w-[10ch] font-sans text-[clamp(2.85rem,13.75vw,3.35rem)] font-medium leading-[0.9] tracking-[-0.06em] text-white sm:text-[clamp(2.9rem,6vw,4rem)] lg:text-[clamp(3.15rem,5vw,4rem)] xl:text-[clamp(4.25rem,4.25vw,5.1rem)]">
             <span className="hero-title-mask block">
               <span className="hero-title-line block">Helping</span>
             </span>

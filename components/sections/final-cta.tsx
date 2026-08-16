@@ -2,25 +2,27 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 
 import { Reveal } from '@/components/reveal'
-import { Container } from '@/components/section'
+import { Container, Eyebrow } from '@/components/section'
 
 export function FinalCta() {
   return (
     <section className="final-contact-echo" aria-labelledby="final-cta-title">
       <Container className="final-contact-echo__container">
         <Reveal className="final-contact-echo__content">
-          <p className="final-contact-echo__eyebrow">Start a conversation</p>
+          <Eyebrow className="final-contact-echo__eyebrow">
+            Start a Conversation
+          </Eyebrow>
 
           <h2
             id="final-cta-title"
             className="case-contact-visual__heading final-contact-echo__heading"
           >
             <span>
-              <span>Let&apos;s discuss your</span>
+              <span>Discuss Your</span>
             </span>
             <span>
               <span>
-                <em className="brand-title-highlight">project.</em>
+                <em className="brand-title-highlight">Project</em>
               </span>
             </span>
           </h2>

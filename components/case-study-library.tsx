@@ -50,10 +50,6 @@ export function CaseStudyLibrary({ studies }: { studies: CaseStudy[] }) {
 
       <div className="case-library__grid">
         {visibleStudies.map((study) => {
-          const index = studies.findIndex(
-            (item) => item.slug === study.slug,
-          )
-
           return (
             <Link
               key={study.slug}
@@ -73,9 +69,6 @@ export function CaseStudyLibrary({ studies }: { studies: CaseStudy[] }) {
                   hoverZoom
                 />
 
-                <span className="case-library-card__number">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
               </div>
 
               <div className="case-library-card__body">

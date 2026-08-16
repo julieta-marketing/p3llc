@@ -1,7 +1,6 @@
 import Image from 'next/image'
-import { Handshake } from 'lucide-react'
 
-import { Section } from '@/components/section'
+import { Eyebrow, Section } from '@/components/section'
 import { Reveal } from '@/components/reveal'
 import { partners } from '@/lib/content'
 
@@ -20,13 +19,12 @@ const partnerLogos = [
 
 export function About() {
   return (
-    <Section id="about" className="about-section bg-[color:var(--surface-2)] py-24 md:py-32 lg:py-40">
-      <div className="about-section__glow" aria-hidden="true" />
-
-      <Reveal>
-        <h2 className="font-sans text-[2.45rem] font-medium leading-[1.01] tracking-[-0.05em] text-[color:var(--color-dark-azure)] sm:text-[3.3rem] lg:text-[4.3rem]">
-          About
-        </h2>
+    <Section id="about" className="executive-about">
+      <Reveal className="executive-about__intro">
+        <Eyebrow>About P3 LLC</Eyebrow>
+        <div>
+          <h2>Built for Public Delivery</h2>
+        </div>
       </Reveal>
 
       <PartnershipStatement />
@@ -38,10 +36,11 @@ export function About() {
 /** Tier one: the photograph and the joint-venture statement. */
 function PartnershipStatement() {
   return (
-    <div className="about-feature mt-12 grid grid-cols-1 gap-4 sm:mt-14 lg:mt-16 lg:grid-cols-12">
+    <div className="executive-about__feature">
       <Reveal
         variant="image"
-        className="about-feature__image relative min-h-[19rem] overflow-hidden rounded-[1.5rem] bg-[color:var(--color-navy)] sm:min-h-[23rem] lg:col-span-7 lg:min-h-[28rem]"
+        as="figure"
+        className="executive-about__image"
       >
         <Image
           src="/case-studies/george-deukmejian-courthouse-approved.jpg"
@@ -50,35 +49,29 @@ function PartnershipStatement() {
           sizes="(min-width: 1024px) 58vw, 100vw"
           className="object-cover object-center"
         />
+        <figcaption>George Deukmejian Courthouse · Long Beach, California</figcaption>
       </Reveal>
 
       <Reveal
         as="article"
-        delay={100}
-        className="about-feature__statement flex flex-col rounded-[1.5rem] bg-[color:var(--color-navy)] p-7 text-white sm:p-9 lg:col-span-5 lg:p-10"
+        delay={70}
+        className="executive-about__statement"
       >
-        <span className="about-feature__title flex items-center gap-4 font-sans text-[1.85rem] font-semibold leading-[1.08] tracking-normal text-white sm:text-[2.05rem] lg:text-[2rem] xl:text-[2.15rem]">
-          <span className="about-feature__icon flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[color:var(--color-azure)]/28 bg-white/8 text-[color:var(--color-azure)]">
-            <Handshake className="h-6 w-6" aria-hidden="true" />
-          </span>
-          The Partnership
-        </span>
+        <Eyebrow onDark>The joint venture</Eyebrow>
+        <h3>Public Leadership &amp; Private Delivery Discipline</h3>
 
-        <p className="mt-5 text-[1.1rem] leading-[1.62] text-white/85 sm:text-[1.18rem] sm:leading-[1.68]">
+        <p className="executive-about__statement-copy">
           Public Private Partners LLC (P3 LLC) is a joint venture between
-          Sunstone Cities and Fullerton Consulting Partners, bringing together
-          decades of public-sector leadership, infrastructure development
-          expertise, and private-sector project delivery experience.
+          Sunstone Cities and Fullerton Consulting Partners. Together, the firms
+          combine decades of government leadership, infrastructure development,
+          finance, and project delivery experience.
         </p>
 
-        <div
-          className="about-feature__expertise"
-          aria-label="Combined expertise"
-        >
-          <span>Public leadership</span>
-          <span>Infrastructure</span>
-          <span>Project delivery</span>
-        </div>
+        <ul className="executive-about__capabilities" aria-label="Combined expertise">
+          <li><span>01</span>Public-sector strategy</li>
+          <li><span>02</span>Infrastructure finance</li>
+          <li><span>03</span>Project delivery</li>
+        </ul>
       </Reveal>
     </div>
   )
@@ -87,7 +80,7 @@ function PartnershipStatement() {
 /** Tier two: one card per partner firm, lighter than the statement above. */
 function PartnerCards() {
   return (
-    <div className="about-partners mt-4 grid grid-cols-1 gap-4 xl:grid-cols-2">
+    <div className="executive-about__partners">
       {partners.map((partner, index) => {
         const logo = partnerLogos[index]
 
@@ -95,29 +88,24 @@ function PartnerCards() {
           <Reveal
             as="article"
             key={partner.name}
-            delay={index * 90}
-            className="about-partner-card flex min-h-[17rem] flex-col rounded-[1.5rem] bg-white p-7 sm:p-8 lg:p-9"
+            delay={index * 70}
+            className="executive-partner-card"
           >
-            <div className="about-partner-card__identity">
-              <h3 className="about-partner-card__title flex items-center gap-3 font-sans font-semibold leading-[1.08] tracking-normal text-[color:var(--color-dark-azure)] sm:gap-4">
-                <span className="about-partner-card__logo flex h-12 w-12 shrink-0 items-center justify-center sm:h-14 sm:w-14" aria-hidden="true">
+            <div className="executive-partner-card__topline">
+              <span>Partner {String(index + 1).padStart(2, '0')}</span>
+              <span className="executive-partner-card__logo" aria-hidden="true">
                   <Image
                     src={logo.src}
                     alt=""
                     width={logo.width}
                     height={logo.height}
-                    className="about-partner-card__logo-image"
+                    className="executive-partner-card__logo-image"
                   />
-                </span>
-                <span className="about-partner-card__name">
-                  {partner.name}
-                </span>
-              </h3>
+              </span>
             </div>
 
-            <p className="about-partner-card__description mt-7 text-[1.1rem] leading-[1.62] text-[color:var(--color-dark-azure)]/78 sm:text-[1.18rem] sm:leading-[1.68]">
-              {partner.description}
-            </p>
+            <h3>{partner.name}</h3>
+            <p>{partner.description}</p>
           </Reveal>
         )
       })}

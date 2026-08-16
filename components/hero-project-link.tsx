@@ -55,7 +55,7 @@ export function HeroProjectLink() {
     <a
       href="#case-studies"
       onClick={scrollToProjects}
-      className="group relative z-30 inline-flex min-h-12 cursor-pointer items-center gap-3 rounded-full border border-white/26 px-6 font-sans text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-white/78 outline-none transition-[border-color,background-color,color] duration-300 hover:border-[color:var(--color-azure)]/70 hover:bg-white/7 hover:text-white focus-visible:border-[color:var(--color-azure)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-azure)]"
+      className="group relative z-30 inline-flex h-13 cursor-pointer items-center gap-3 rounded-full border border-white/26 px-6 font-sans text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-white/78 outline-none transition-[border-color,background-color,color] duration-300 hover:border-[color:var(--color-azure)]/70 hover:bg-white/7 hover:text-white focus-visible:border-[color:var(--color-azure)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-azure)] md:px-7"
     >
       Case Studies
       <ArrowRight className="link-arrow h-4 w-4" aria-hidden="true" />

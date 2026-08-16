@@ -28,7 +28,7 @@ export function CaseStudies({ projects }: { projects: CaseStudy[] }) {
           <div className="lg:col-span-4 lg:flex lg:justify-end lg:pb-2">
             <Link
               href="/case-studies"
-              className="case-feature-section__all group inline-flex items-center gap-4 font-['Poppins'] text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-white outline-none"
+              className="case-feature-section__all group inline-flex items-center gap-4 font-['Poppins'] text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-white outline-none"
             >
               View all case studies
               <span className="grid h-11 w-11 place-items-center rounded-full border border-white/20 transition-colors group-hover:border-[color:var(--color-azure)] group-hover:bg-[color:var(--color-azure)] group-hover:text-[color:var(--color-dark-azure)]">
@@ -47,7 +47,9 @@ export function CaseStudies({ projects }: { projects: CaseStudy[] }) {
 function FeaturedCaseCarousel({ projects }: { projects: CaseStudy[] }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [interactionPaused, setInteractionPaused] = useState(false)
+  const [isInView, setIsInView] = useState(false)
   const [incomingIndex, setIncomingIndex] = useState<number | null>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
   const hoverTimerRef = useRef<number | null>(null)
   const transitionTimerRef = useRef<number | null>(null)
   const transitioningRef = useRef(false)
@@ -57,11 +59,27 @@ function FeaturedCaseCarousel({ projects }: { projects: CaseStudy[] }) {
   const activeNumber = formatCaseNumber(activeIndex)
 
   useEffect(() => {
+    const carousel = carouselRef.current
+    if (!carousel || typeof IntersectionObserver === 'undefined') {
+      setIsInView(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.18, rootMargin: '0px 0px -8% 0px' },
+    )
+
+    observer.observe(carousel)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
     const reducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
 
-    if (interactionPaused || reducedMotion) return
+    if (!isInView || interactionPaused || reducedMotion) return
 
     const timer = window.setTimeout(() => {
       const nextIndex = (activeIndex + 1) % projects.length
@@ -81,7 +99,7 @@ function FeaturedCaseCarousel({ projects }: { projects: CaseStudy[] }) {
     }, 4800)
 
     return () => window.clearTimeout(timer)
-  }, [activeIndex, interactionPaused, projects.length])
+  }, [activeIndex, interactionPaused, isInView, projects.length])
 
   useEffect(() => {
     return () => {
@@ -182,6 +200,7 @@ function FeaturedCaseCarousel({ projects }: { projects: CaseStudy[] }) {
       aria-label="Featured case studies"
     >
       <div
+        ref={carouselRef}
         className="case-switcher case-switcher--featured"
         onMouseLeave={releaseInteraction}
         onFocusCapture={() => setInteractionPaused(true)}
@@ -283,26 +302,10 @@ function FeaturedCaseCarousel({ projects }: { projects: CaseStudy[] }) {
 
         <div className="case-switcher__content" aria-live="polite">
           <div key={activeProject.slug} className="case-switcher__text">
-            <div className="case-switcher__meta">
-              <span className="case-switcher__meta-index">
-                {activeNumber}
-              </span>
-              <span
-                className="case-switcher__meta-line"
-                aria-hidden="true"
-              />
-              <span className="case-switcher__meta-label">
-                Featured Case Study
-              </span>
-            </div>
-
-            <div className="case-switcher__tags">
-              {activeProject.categories.map((category) => (
-                <span key={category}>
-                  {category}
-                </span>
-              ))}
-            </div>
+            <p className="case-switcher__context">
+              <span>{activeNumber}</span>
+              {activeProject.categories[0]}
+            </p>
 
             <h3 className="case-switcher__title">
               {activeProject.title}

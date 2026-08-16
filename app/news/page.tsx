@@ -28,7 +28,7 @@ export default function NewsLibraryPage() {
                 <h1>News</h1>
                 <Link
                   href="/#news"
-                  className="group mt-8 inline-flex min-h-12 w-fit items-center gap-3 rounded-full border border-white/30 px-5 font-['Poppins'] text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-white outline-none transition-colors hover:border-[color:var(--color-azure)] hover:bg-[color:var(--color-azure)] hover:text-[color:var(--color-dark-azure)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-azure)]"
+                  className="group mt-8 inline-flex min-h-12 w-fit items-center gap-3 rounded-full border border-white/30 px-5 font-['Poppins'] text-[0.76rem] font-semibold uppercase tracking-[0.13em] text-white outline-none transition-colors hover:border-[color:var(--color-azure)] hover:bg-[color:var(--color-azure)] hover:text-[color:var(--color-dark-azure)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-azure)]"
                 >
                   <ArrowLeft
                     aria-hidden="true"
@@ -45,11 +45,8 @@ export default function NewsLibraryPage() {
           <Container>
             <Reveal className="case-library__toolbar">
               <div>
-                <p className="font-['Poppins'] text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-blue)]">
-                  Latest
-                </p>
-                <h2 className="mt-3 font-sans text-3xl font-medium tracking-[-0.04em] text-[color:var(--color-dark-azure)] md:text-4xl">
-                  Articles and Updates
+                <h2 className="font-sans text-3xl font-medium tracking-[-0.04em] text-[color:var(--color-dark-azure)] md:text-4xl">
+                  Latest News
                 </h2>
               </div>
             </Reveal>
@@ -70,9 +67,6 @@ export default function NewsLibraryPage() {
                         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                         className="object-cover"
                       />
-                      <span className="case-library-card__number">
-                        {String(post.order).padStart(2, '0')}
-                      </span>
                       <span className="case-library-card__action" aria-hidden="true">
                         <ArrowUpRight className="h-4 w-4" />
                       </span>

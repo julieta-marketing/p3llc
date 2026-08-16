@@ -70,7 +70,7 @@ export function Eyebrow({
   return (
     <p
       className={cn(
-        'flex items-center gap-3 font-sans text-[0.66rem] font-semibold uppercase tracking-[0.2em]',
+        'flex items-center gap-3 font-sans text-[0.78rem] font-semibold uppercase tracking-[0.15em]',
         onDark ? 'text-[color:var(--color-azure)]' : 'text-[color:var(--blue-ink)]',
         className,
       )}
@@ -78,7 +78,7 @@ export function Eyebrow({
       {!bare && (
         <span
           className={cn(
-            'h-1.5 w-1.5 rounded-full',
+            'h-[0.42rem] w-[0.42rem] rounded-full',
             onDark ? 'bg-[color:var(--color-azure)]' : 'bg-[color:var(--color-blue)]',
           )}
           aria-hidden="true"
@@ -112,7 +112,7 @@ export function SectionHeading({
     (index ? (
       <span
         className={cn(
-          'shrink-0 font-sans text-[0.62rem] font-semibold tabular-nums tracking-[0.28em]',
+          'shrink-0 font-sans text-[0.72rem] font-semibold tabular-nums tracking-[0.22em]',
           onDark ? 'text-white/65' : 'text-muted-foreground',
         )}
       >
