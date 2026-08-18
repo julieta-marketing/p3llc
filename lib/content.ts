@@ -280,7 +280,7 @@ export const team: TeamMember[] = [
     caseImage: '/case-studies/long-beach-civic-center-approved.webp',
     caseImageAlt: 'Long Beach Civic Center',
     linkedin: 'https://www.linkedin.com/in/jeffreyfullerton/',
-    email: 'projects@P3LLC.net',
+    email: 'Projects@P3LLC.net',
     bio:
       'Jeff Fullerton brings more than 20 years of experience across real estate development, infrastructure, finance, and public-private partnerships. He has led complex public and private projects through development, procurement, financing, structuring, and alternative delivery.',
   },
@@ -377,7 +377,7 @@ export const faqItems: FaqItem[] = [
 /* ------------------------------------------------------------------ */
 
 /** Single source of truth — used by the footer and the contact page. */
-export const contactEmail = 'projects@teamp3llc.com'
+export const contactEmail = 'Projects@P3LLC.net'
 
 export const contactInfo = {
   emails: [contactEmail],

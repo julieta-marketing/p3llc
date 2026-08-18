@@ -167,8 +167,7 @@ export async function POST(request: Request) {
   const from =
     process.env.CONTACT_FROM_EMAIL?.trim() ||
     'Epictopia <contact@epictopia.ai>'
-  const to =
-    process.env.CONTACT_TO_EMAIL?.trim() || 'projects@teamp3llc.com'
+  const to = process.env.CONTACT_TO_EMAIL?.trim() || 'Projects@P3LLC.net'
 
   if (!apiKey) {
     console.error('Contact form is missing RESEND_API_KEY.')
